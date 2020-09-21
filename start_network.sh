@@ -18,3 +18,5 @@ popd
 
 #
 setup_channel
+echo "############################   Creating Channel   ################################ "
+./createChannel.sh
