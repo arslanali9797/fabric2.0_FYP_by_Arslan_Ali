@@ -3,8 +3,8 @@ set -ex
 . ./envVar.sh
 
 
-CC_RUNTIME_LANGUAGE=node # chaincode runtime language is node.js
-CC_SRC_PATH="./chaincode/"
+CC_RUNTIME_LANGUAGE="golang" # chaincode runtime language is node.js
+CC_SRC_PATH="./go/"
 CHANNEL_NAME="mychannel"
 VERSION="1"
 CC_NAME="fabcar"
@@ -18,7 +18,7 @@ packageChaincode() {
   peer lifecycle chaincode package ${CC_NAME}.tar.gz \
   --path ${CC_SRC_PATH} --lang ${CC_RUNTIME_LANGUAGE} \
   --label ${CC_NAME}_${VERSION}
-  echo "===================== Chaincode is packaged on peer0.org1 ===================== "
+  echo "===================== Chaincode is packaged ===================== "
 }
 packageChaincode
 
