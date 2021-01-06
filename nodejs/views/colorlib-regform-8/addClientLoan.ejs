@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<style>
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.bg {
+  /* The image used */
+  background-image: url("signup-bg.jpg");
+
+  /* Full height */
+  height: 150%; 
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.rcorners3 {
+	margin: auto;
+  background:#ffff;
+  border-radius: 25px;
+  padding: 20px; 
+  width:  70%;
+  height: 75%;  
+}
+</style>
+	<title>Client</title>
+
+	<link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+    
+</head>
+
+
+
+
+
+  
+
+    </script>
+
+
+<body>
+	<div class="bg">
+		<div class="container-fluid">
+                <div class="jumbotron" style="background-color:#292b2c">
+                    <div class="form-inline">
+                        <div class="col-3 text-light">
+                            <h1>Bank_1</h1>
+                        </div>
+                        <div class="text-center text-info">
+                            <h1>Decentralized Credit Score System (DCSS)</h1>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <a href="/home">
+                    <button type="submit" class="btn btn-info offset-5 col-1" >Home  </button>
+                    </a>
+  
+                    <a href = "/add">
+                        <button type="submit" class="btn btn-info col-1.5" >Add Record</button>
+                        </a>
+  
+                      </a>
+                      <a href="/find">
+                        <button type="submit" class="btn btn-info col-1" > Find  </button>
+                      </a>
+  
+                    <a href="/clientLoan">
+                     <button type="sub mit" class="btn btn-info col-1.5" >Client Loan</button>
+                
+                     <a href="/clientLoanInfo">
+                        <button type="sub mit" class="btn btn-info col-1.5" >Loan Information</button>
+                   </a>
+
+
+      </div>
+
+
+
+
+
+
+
+      <form name="myForm" action="/loanInfo" onsubmit="return validateForm()" method="post" required>
+
+
+		 <div class="rcorners3">
+                <!-- <div style="background:#ffff;"> -->
+                    
+
+                        <h1 class="form-title" style="text-align: center">Client Loan Information</h1><br>
+
+                        
+
+                        <div class="py-4 row offset-2">
+                            <input type="text" class="mx-2 col-5 form-control" name="cnic" id="" placeholder="Your CNIC"/>
+
+                            <input type="text" class="col-5 form-control" name="loanamount" id="" placeholder="Loan Amount"/>
+                        </div>
+
+
+                        <div class="py-4 row offset-2">
+
+                            <input type="text" class="mx-2 col-5 form-control" name="paymentplan" id="" placeholder="Payment Plan year"/>
+
+                             <input type="text" class="col-5 form-control" name="instalmentdate" id="" placeholder="payment Date"/>
+                                
+                        </div>
+                        
+                        <div class="py-4 row offset-2">
+                            <select name="loanType" class="my-4 form-control col-5">
+                                <option value="loanType">Service Type</option>
+                                <option value="home">Home Loan</option>
+                                <option value="vehicle">Vehicle Loan</option>
+                                <option value="bussiness">Bussiness Loan</option>         
+                            </select>
+                            
+
+                            </div>
+                        <div class="">
+                            <input type="submit" name="submit" id="submit"  class=" form-submit btn btn-info offset-7 col-3" value="submit"/>
+                        </div>
+                 </form>
+
+
+                  
+                </div>
+            </div>
+        
+	</div>
+
+	
+		
+	</div>
+</body>
+</html>

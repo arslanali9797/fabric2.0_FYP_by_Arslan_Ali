@@ -39,6 +39,24 @@ body {
 }
 </style>
 </head>
+
+<script>
+function validateform(){  
+    var cnic=document.myform.search.value;  
+    var CNICformat = /^[0-9]{5}[0-9]{7}[0-9]{1}$/;
+
+    if(cnic.match(CNICformat))
+    {   
+        return 1
+    } 
+    else{
+      alert("CNIC is NOt Valid Please Enter Correct CNIC");
+      return false}
+    
+    }  
+    </script>  
+
+
 <body background-color:#f7f7f7>
  <div class="container-fluid">
                 <div class="jumbotron" style="background-color:#292b2c">
@@ -47,51 +65,81 @@ body {
                             <h1>Bank_1</h1>
                         </div>
                         <div class="text-center text-info">
-                            <h1>Decentralize Created Score System(DCSS)</h1>
+                            <h1>Decentralized Credit Score System (DCSS)</h1>
                         </div>
                     </div>
                 </div>
-                <div class="container-fluid">
-                <div class="container-fluid py-0">
-                    <div class="row">
-                        <div class="offset-7">
+                <a href="/home">
+                  <button type="submit" class="btn btn-info offset-5 col-1" >Home  </button>
+                  </a>
 
-                          <a href="/">
-                          <button type="submit" class="btn btn-info col-3" style="width:100">Home  </button>
-                          </a>
+                  <a href = "/add">
+                      <button type="submit" class="btn btn-info col-1.5" >Add Record</button>
+                      </a>
 
-                           <button type="submit" class="btn btn-info col-3" style="width:100">Calculate</button>
+                    </a>
+                    <a href="/find">
+                      <button type="submit" class="btn btn-info col-1" > Find  </button>
+                    </a>
 
-                           <a href="/find">
-                             <button type="submit" class="btn btn-info col-3" style="width:100"> Find  </button>
-                           </a>
+                  <a href="/clientLoan">
+                   <button type="sub mit" class="btn btn-info col-1.5" >Client Loan</button>
+              
+                   <a href="/clientLoanInfo">
+                      <button type="sub mit" class="btn btn-info col-1.5" >Loan Information</button>
+                 </a>
 
-                           <button type="submit" class="btn btn-info col-3" style="width:100">Add</button>
 
-                        </div>
-                    </div>
-                </div>
 
-      </div>
+
+                   
       <div class="container-fluid py-3">
+       
+        <form name="myform" method='GET' action="/findOne" onsubmit="return validateform()">
+        
           <div class="form-group">
             <div class="form-inline ">
-              <input type="text" name="Search" placeholder="Search" class="form-control offset-8 col-2 px-4">
+
+              
+              <input type="text" name="search" placeholder="Search without dash" class="form-control offset-8 col-2 px-4">
 
                   <button type="submit" class="btn btn-info col-1" >Search</button>
-
               </div>
             </div>
+          </form>
+
 
           </div>
 
           <div class="container">
-            <div class="row jumbotron px-3" style="background-color:#D5DBDB; width: 1090px;">
-              <label class="control-label col-sm-1">Email:</label>
-              <label class="control-label col-sm-3">Email:</label>
-               <label class="control-label col-sm-3">Email:</label>
-               <label class="control-label col-sm-3">Email:</label>
-                 <button type="submit" class="col-2 btn btn-info" >Show Detail</button>
+            <div class="jumbotron " style="background-color:#D5DBDB; width:1070px ;">
+              <div class="row">  
+                <label class="control-label col-sm-1 my-3">Name:</label>
+                <label class="control-label col-sm-1  my-3"> </label>
+
+
+                <label class="control-label offset-5 col-sm-2  my-3">Credit Score:</label>
+                <label class="control-label col-sm-3  my-3"> </label>
+
+            
+              </div>
+                <div class="row">
+                <label class="control-label col-sm-1 my-3">CNIC:</label>
+                <label class="control-label  col-sm-1  my-3"></label>
+  
+              </div>
+                <div class="row">
+                  <label class="control-label col-sm-1 my-3">Bank1:</label>
+                  <label class="control-label  col-sm-3  my-3"></label>
+
+                </div>
+                  <div class="row">
+                    <label class="control-label col-sm-1 my-3">Bank2:</label>
+                    <label class="control-label  col-sm-1  my-3"></label>
+                    <button type="submit" class="btn btn-info offset-8 col-2">show Details  </button>
+
+                  </div>
+              
             </div>
 
 

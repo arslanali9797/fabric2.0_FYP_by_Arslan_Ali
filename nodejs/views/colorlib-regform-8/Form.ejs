@@ -1,75 +1,271 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
-    <title>Sign Up Form by Colorlib</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <!-- Font Icon -->
-    <!-- <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css"> -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Main css -->
-    <link rel="stylesheet" href="css/style.css">
+	<style>
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.bg {
+  /* The image used */
+  background-image: url("signup-bg.jpg");
+
+  /* Full height */
+  height: 150%; 
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.rcorners3 {
+	margin: auto;
+  background:#ffff;
+  border-radius: 25px;
+  padding: 20px; 
+  width:  70%;
+  height: 75%;  
+}
+</style>
+	<title>Client</title>
+
+	<link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
+
+<script>
+    function validateForm() {
+    
+    var fname = document.forms["myForm"]["fname"].value;
+    var lname = document.forms["myForm"]["lname"].value;
+    if (fname == "" || fname == null) {
+        alert("First Name must be filled out");
+        return false;}
+      if (lname == "" || lname == null) {
+        alert("Last Name must be filled out");
+        return false;}
+
+//GENDER
+var gender1 = document.getElementById('gender').value;
+        if(gender1=="notselcted"){       
+            alert("Gender is not selected.");
+            return false;
+        
+        }
+
+
+  //Martial STATUS
+  var status1 = document.getElementById('status').value;
+        if(status1=="statusnotselcted"){       
+            alert(" Marital Status is not selected.");
+            return false;
+        }
+
+
+
+    //CNIC
+    var cnic=document.forms["myForm"]["cnic"].value;  
+    var CNICformat = /^[0-9]{5}[0-9]{7}[0-9]{1}$/;
+
+     if(!cnic.match(CNICformat))
+     {
+         alert("Please Enter Valid CNIC");
+      return false}
+    
+
+
+
+
+//AGE
+var age1 = document.forms["myForm"]["age"].value;
+var ageformate = /^[0-9]{2}$/;
+if((!age1.match(ageformate)))
+    {alert("Please Enter Valid age");
+      return false}
+
+     
+//VALUE OF Assets
+var asstesValue = document.forms["myForm"]["assetsValue"].value;
+if(asstesValue==""){
+    alert("please add assetes value");
+    return false}
+
+
+//DEPOSITS PER MONTH
+var depositsperMonth = document.forms["myForm"]["deposit"].value;
+if(depositsperMonth==""){
+    alert("please Add Deposits per month value");
+    return false}
+
+
+//WITHDRAW Per Month
+
+var withdrawperMonth = document.forms["myForm"]["withdrawPerMonth"].value;
+if(withdrawperMonth==""){
+    alert("please Add value Withdraw per month value");
+    return false}
+
+//SAVING Amount
+
+
+var savingAmount = document.forms["myForm"]["savingAmount"].value;
+if(savingAmount==""){
+    alert("please Insert Saving Amount");
+    return false}
+        
+//HAS been saving for Year
+var savingForYear = document.forms["myForm"]["savingForYear"].value;
+if(savingForYear==""){
+    alert("please add no of years");
+    return false}
+
+    
+// Transaction per MOnth
+var transactionPerMonth = document.forms["myForm"]["transactionPerMonth"].value;
+if(transactionPerMonth==""){
+    alert("please add per month tranaction");
+    return false}
+
+
+
+
+    }//script
+
+    </script>
+
+
 <body>
+	<div class="bg">
+		<div class="container-fluid">
+                <div class="jumbotron" style="background-color:#292b2c">
+                    <div class="form-inline">
+                        <div class="col-3 text-light">
+                            <h1>Bank_1</h1>
+                        </div>
+                        <div class="text-center text-info">
+                            <h1>Decentralized Credit Score System (DCSS)</h1>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="/home">
+                    <button type="submit" class="btn btn-info offset-5 col-1" >Home  </button>
+                    </a>
+  
+                    <a href = "/add">
+                        <button type="submit" class="btn btn-info col-1.5" >Add Record</button>
+                        </a>
+  
+                      </a>
+                      <a href="/find">
+                        <button type="submit" class="btn btn-info col-1" > Find  </button>
+                      </a>
+  
+                    <a href="/clientLoan">
+                     <button type="sub mit" class="btn btn-info col-1.5" >Client Loan</button>
+                
+                     <a href="/clientLoanInfo">
+                        <button type="sub mit" class="btn btn-info col-1.5" >Loan Information</button>
+                   </a>
 
-    <div class="main">
 
-        <section class="signup">
-            <!-- <img src="images/signup-bg.jpg" alt=""> -->
-            <div class="container" style="width:950px; ">
-                <div class="signup-content" style="background:#ffffff;">
-                    <form method="POST" id="signup-form" class="signup-form align-center" >
-                        <h2 class="form-title">Registration Form</h2>
+        
+      </div>
+
+
+
+
+
+
+
+      <form name="myForm" action="/clientInfo" onsubmit="return validateForm()" method="post" required>
+
+
+		 <div class="rcorners3">
+                <!-- <div style="background:#ffff;"> -->
+                    
+
+                        <h1 class="form-title" style="text-align: center">Client Information</h1><br>
+
                         <div class="form-group" style="font-size: 20px">
-                            <input type="text" class="col-5 form-input" name="name" id="name" placeholder="Your Name"/>
-                            <input type="number" class="col-5 form-input" name="cnic" id="cnic" placeholder="Your CNIC"/>
-                        </div>
+                        	<div class="row offset-2">
 
-                        <div class="form-group">
-                            <input type="number" class="col-5 form-input" name="age" id="age" placeholder="Age"/>
-                            <input type="number" class="col-5 form-input" name="" id="" placeholder="Value of Assets"/>
-                        </div>
+                    
 
-                        <div class="form-group">
-                            <input type="number" class="col-5 form-input" name="" id="" placeholder="Deposit per Month"/>
-                            <input type="number" class="col-5 form-input" name="" id="" placeholder="Withdraw_per_Month"/>
-                        </div>
-                         <div class="form-group">
-                            <input type="number" class="col-5 form-input" name="" id="" placeholder="Has Benn Saving for Years"/>
-                            <input type="number" class="col-5 form-input" name="" id="" placeholder="Transaction per Month Average"/>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class=" form-input col-5" name="" id="" placeholder="Type of Bussiness"/>
-                        <select class="form-input col-5" >
+                                
+                        <input type="text" class="mx-2 col-5 form-control" name="fname" id="fname" placeholder="first Name"/>
+                        
+                        <input type="text" class=" col-5 form-control" name="lname" id="lanme" placeholder="last Name"/>
+                           
+
+                        <select name="gender" class="my-4 mx-2 form-control col-5"  id="gender" >                           
+                            <option value="notselcted">Select Gender</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                         </select>
-                        <select name="Martial_Status" class="form-input col-5">
-                            <option value="">Single</option>
-                            <option value="">Mingle</option>
+
+
+                        <select name="status" class="my-4 form-control col-5"  id="status">
+                            <option value="statusnotselcted">Martial Status</option>
+                            <option value="bacheler">Bacheler</option>
+                            <option value="married">Married</option>
+                            <option value="widow">Widow(er)</option>
+
                         </select>
-                        <input type="number" class="form-input col-5" name="score" placeholder="score" disabled="" style="font-size: 50px">
+                     
+
+                            <input type="text" class="my-4 mx-2 col-5 form-control" name="cnic" id="cnic" placeholder="Your CNIC"/>
+
+                            <input type="text" class="my-4 col-5 form-control" name="age" id="age" placeholder="Age"/>
+
+                            <input type="text" class="my-4 mx-2 col-5 form-control" name="assetsValue" id="" placeholder="Value of Assets"/>
+
+                            <input type="text" class="my-4 col-5 form-control" name="deposit" id="" placeholder="Deposit per Month"/>
                         </div>
 
-                        
 
+</div>
+                       
 
-                        
-                        <div class="form-group">
-                            <input type="submit" name="submit" id="submit" class="form-submit col-10" value="submit"/>
+                        <div class="py-4 row offset-2">
+                            <input type="text" class="mx-2 col-5 form-control" name="withdrawPerMonth" id="" placeholder="Withdraw Per Month"/>
+                            <input type="text" class="col-5 form-control" name="savingAmount" id="" placeholder="Current Saving Amount"/>
                         </div>
-                    </form>
+                         <div class="py-4 row offset-2">
+                            <input type="text" class=" mx-2 col-5 form-control" name="savingForYear" id="" placeholder="Has Benn Saving for Years"/>
+                            <input type="text" class="col-5 form-control" name="transactionPerMonth" id="" placeholder="No of Transaction per Month Average"/>
+                        </div>
+
+                        <div class="py-4 row offset-2">
+                            <select name="JobType" class="my-4 form-control col-5">
+                                <option value="jobType">Job Type</option>
+                                <option value="govt">Govt Job</option>
+                                <option value="private">Private Job</option>
+                                <option value="bussiness">Bussiness</option>         
+                            </select>
+                            
+
+                            <input type="number" class="py-1 form-control col-5" name="score" placeholder="score" disabled="" style="font-size: 50px">
+                            </div>
+                        <div class="">
+                            <input type="submit" name="submit" id="submit"  class=" form-submit btn btn-info offset-7 col-3" value="submit"/>
+                        </div>
+                 </form>
+
+
                   
                 </div>
             </div>
-        </section>
+        
+	</div>
 
-    </div>
-
-    <!-- JS -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="js/main.js"></script>
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+	
+		
+	</div>
+</body>
 </html>

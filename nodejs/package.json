@@ -9,16 +9,20 @@
     "scripts": {
         "lint": "eslint .",
         "pretest": "npm run lint",
-        "test": "nyc mocha --recursive"
+        "test": "nyc mocha --recursive",
+        "start": "nodemon server.js"
     },
     "engineStrict": true,
     "author": "Hyperledger",
     "license": "Apache-2.0",
     "dependencies": {
+        "body-parser": "^1.19.0",
         "ejs": "^3.1.5",
         "express": "^4.17.1",
         "fabric-ca-client": "^2.1.0",
-        "fabric-network": "^2.1.0"
+        "fabric-network": "^2.1.0",
+        "fabric-shim": "^2.2.1",
+        "nodemon": "^2.0.6"
     },
     "devDependencies": {
         "chai": "^4.2.0",

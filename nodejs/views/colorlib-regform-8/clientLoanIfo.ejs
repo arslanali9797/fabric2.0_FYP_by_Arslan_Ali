@@ -1,0 +1,115 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    .block {
+  display: block;
+  width:20%;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+</style>
+
+
+
+    <!-- <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
+    <title>Sign Up Form by Colorlib</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <!-- Font Icon -->
+    <!-- <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css"> -->
+
+    <!-- Main css -->
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <style>
+body {
+  background-color:white
+}
+</style>
+</head>
+
+<script>
+function validateform(){  
+    var cnic=document.myform.search.value;  
+    var CNICformat = /^[0-9]{5}[0-9]{7}[0-9]{1}$/;
+
+    if(cnic.match(CNICformat))
+    {   
+        return 1
+    } 
+    else{
+      alert("CNIC is NOt Valid Please Enter Correct CNIC");
+      return false}
+    
+    }  
+    </script>  
+
+
+<body background-color:#f7f7f7>
+ <div class="container-fluid">
+                <div class="jumbotron" style="background-color:#292b2c">
+                    <div class="form-inline">
+                        <div class="col-3 text-light">
+                            <h1>Bank_1</h1>
+                        </div>
+                        <div class="text-center text-info">
+                            <h1>Decentralized Credit Score System (DCSS)</h1>
+                        </div>
+                    </div>
+                </div>
+                <a href="/home">
+                    <button type="submit" class="btn btn-info offset-5 col-1" >Home  </button>
+                    </a>
+  
+                    <a href = "/add">
+                        <button type="submit" class="btn btn-info col-1.5" >Add Record</button>
+                        </a>
+  
+                      </a>
+                      <a href="/find">
+                        <button type="submit" class="btn btn-info col-1" > Find  </button>
+                      </a>
+  
+                    <a href="/clientLoan">
+                     <button type="sub mit" class="btn btn-info col-1.5" >Client Loan</button>
+                
+                     <a href="/clientLoanInfo">
+                        <button type="sub mit" class="btn btn-info col-1.5" >Loan Information</button>
+                   </a>
+
+
+
+                   
+      <div class="container-fluid py-3">
+       
+        <form name="myform" method='GET' action="/findOne" onsubmit="return validateform()">
+        
+          <div class="form-group">
+            <div class="form-inline ">
+
+              
+              <input type="text" name="search" placeholder="Search without dash" class="form-control offset-8 col-2 px-4">
+
+                  <button type="submit" class="btn btn-info col-1" >Search</button>
+              </div>
+            </div>
+          </form>
+
+
+         
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

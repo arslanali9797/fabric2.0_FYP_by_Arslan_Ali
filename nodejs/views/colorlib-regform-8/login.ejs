@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+	<style>
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.bg {
+  /* The image used */
+  background-image: url("signup-bg.jpg");
+
+  /* Full height */
+  height: 100%; 
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.rcorners3 {
+	margin: auto;
+  background:#0B3235;
+  border-radius: 50px;
+  padding: 80px; 
+  width:  50%;
+  height: 80%;  
+}
+</style>
+
+	<title>Login Form</title>
+
+
+	<link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+
+	<div class="bg">
+
+		<div class="container">
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+
+
+      <form  name="login"  action="/checkLogin" onsubmit="return validateForm()" method="get" required>
+      
+        <div class="rcorners3">
+                <!-- <div style="background:#ffff;"> -->
+                    
+                        <h2 class="form-title text-light" style="text-align: center">Login User</h2>
+                        <br>
+
+                        <div class="form-group" style="font-size: 20px">
+                        	<div class="row ">
+                            <input type="Username" class="offset-3 col-6 form-control" name="id"  placeholder="User Id"/>
+							</div>
+							<div class="form-group" style="font-size: 50px">
+                        	<div class="row ">
+                            <input type="password" class="my-4 offset-3 col-6 form-control" name="password"  placeholder="password"/>
+                            </div>
+                            <div class="row">
+                       
+                            <button type="submit" class="offset-3 btn btn-light col-6 form-control" >Login</button>
+                            
+                          </form>
+	</div>
+
+
+</body>
+</html>

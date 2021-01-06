@@ -3,6 +3,17 @@ set -ex
 . ./envVar.sh
 
 
+#presetup(){
+#    echo Vendoring Go dependencies ...
+#    pushd ./go
+#    GO111MODULE=on go mod vendor
+#    popd
+#    echo Finished vendoring Go dependencies
+#}
+#presetup
+
+
+
 CC_RUNTIME_LANGUAGE="golang" # chaincode runtime language is node.js
 CC_SRC_PATH="./go/"
 CHANNEL_NAME="mychannel"

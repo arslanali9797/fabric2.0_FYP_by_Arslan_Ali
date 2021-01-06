@@ -1,10 +1,14 @@
+
+
+module.exports.addClient= function(CNIC,fname,lname,age,gender,martialStatus,assetsValue,depositPerMonth,withdrawPerMonth,savingYears,noTransaction,typeOfBussiness,savingAmount,callback){
+
+
 /*
  * SPDX-License-Identifier: Apache-2.0
  */
 
 'use strict';
 
-console.log(1);
 
 const { Gateway, Wallets } = require('fabric-network');
 const fs = require('fs');
@@ -39,15 +43,13 @@ async function main() {
         // Get the contract from the network.
         const contract = network.getContract('fabcar');
 
-        // Submit the specified transaction.
-        // createCar transaction - requires 5 argument, ex: ('createCar', 'CAR12', 'Honda', 'Accord', 'Black', 'Tom')
-        // changeCarOwner transaction - requires 2 args , ex: ('changeCarOwner', 'CAR12', 'Dave')
-        await contract.submitTransaction('Addrecord', '4550303812456', 'Waqar', 'Rao', 25, 'Male','single',200000,1,2,3,13,'agriculture',11);
+        await contract.submitTransaction('AddRecord',CNIC,fname,lname,age,gender,martialStatus,assetsValue,depositPerMonth,withdrawPerMonth,savingYears,noTransaction,typeOfBussiness,savingAmount,0,0,0,"org1MSP");
         console.log('Transaction has been submitted');
 
         // Disconnect from the gateway.
         await gateway.disconnect();
-
+        callback('200');
+        
     } catch (error) {
         console.error(`Failed to submit transaction: ${error}`);
         process.exit(1);
@@ -55,3 +57,4 @@ async function main() {
 }
 
 main();
+}
