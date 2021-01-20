@@ -90,17 +90,22 @@ function validateform(){
                    </a>
 
 
-
+                   <%if (found !=''){%>
+                    <div class="container">
+                      <div class="alert alert-danger" role="alert">
+                        <%=found%>
+                        </div>
+                <%}%>
                    
       <div class="container-fluid py-3">
        
-        <form name="myform" method='GET' action="/findOne" onsubmit="return validateform()">
+        <form name="myform" method='GET' action="/clientLoanInfoSingle" onsubmit="return validateform()">
         
           <div class="form-group">
             <div class="form-inline ">
 
               
-              <input type="text" name="search" placeholder="Search without dash" class="form-control offset-8 col-2 px-4">
+              <input type="text" name="clientLoanCNIC" placeholder="Search without dash" class="form-control offset-8 col-2 px-4">
 
                   <button type="submit" class="btn btn-info col-1" >Search</button>
               </div>

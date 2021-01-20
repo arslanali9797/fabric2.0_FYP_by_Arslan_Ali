@@ -1,28 +1,22 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 
+module.exports.searchOne = function(cnic,callback){
 
-//,'4550503812444','car loan','org1MSP','azhar' ,'durani',100000,'2/3/2020',2,50000,'28');
-module.exports.loanClientInfo = function(cnic,loanType,loanAmount,yearPlan,depositeDate,callback){
-
-
-
-
-    /*
-     * SPDX-License-Identifier: Apache-2.0
-     */
-    
     'use strict';
     
-    
     const { Gateway, Wallets } = require('fabric-network');
-    const fs = require('fs');
     const path = require('path');
+    const fs = require('fs');
+    
     
     async function main() {
         try {
             // load the network configuration
             const ccpPath = path.resolve(__dirname, '..',  'connection', 'connection-org1.json');
-            let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
+            const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
     
             // Create a new file system based wallet for managing identities.
             const walletPath = path.join(process.cwd(), 'wallet');
@@ -46,23 +40,21 @@ module.exports.loanClientInfo = function(cnic,loanType,loanAmount,yearPlan,depos
     
             // Get the contract from the network.
             const contract = network.getContract('fabcar');
+    
+            // Evaluate the specified transaction.
+            // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
+            // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
+             const result = await contract.evaluateTransaction('GetOneClientRecord',cnic,'org1loan');
+             console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
-
-       const  result = await contract.submitTransaction('ClientPrivateRecord',cnic,loanType,loanAmount,'18/01/2021',yearPlan,depositeDate,'org1loan','org1msp');
-       console.log(result.toString());
-        
-       callback(result.toString());
-
-       // Disconnect from the gateway.
-       await gateway.disconnect();
-
-            
+             callback(result.toString());
+    
+        //           
         } catch (error) {
-            console.error(`Failed to submit transaction: ${error}`);
+            console.error(`Failed to evaluate transaction: ${error}`);
             process.exit(1);
         }
     }
     
     main();
-    
-}
+    }

@@ -45,9 +45,12 @@ async function main() {
         // Get the contract from the network.
         const contract = network.getContract('fabcar');
 
-        const result = await contract.evaluateTransaction('LoginUser',id,password);
+        console.log("id and password in login.js file "+id+'  and  '+password);
+        const result = await contract.evaluateTransaction('LoginUser',id+'org1msp',password);
         console.log(`Login Result has been evaluated, result is: ${result.toString()}`);
-        callback(null,result.toString());
+        
+        
+        callback(result.toString());
 
         // Disconnect from the gateway.
         await gateway.disconnect();

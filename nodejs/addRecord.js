@@ -43,12 +43,15 @@ async function main() {
         // Get the contract from the network.
         const contract = network.getContract('fabcar');
 
-        await contract.submitTransaction('AddRecord',CNIC,fname,lname,age,gender,martialStatus,assetsValue,depositPerMonth,withdrawPerMonth,savingYears,noTransaction,typeOfBussiness,savingAmount,0,0,0,"org1MSP");
-        console.log('Transaction has been submitted');
+        const result = await contract.submitTransaction('AddRecord',CNIC,fname,lname,age,gender,martialStatus,assetsValue,depositPerMonth,withdrawPerMonth,savingYears,noTransaction,typeOfBussiness,savingAmount,0,0,0,'org1msp');
+        
+        console.log(result.toString());
+        
+        callback(result.toString());
 
         // Disconnect from the gateway.
         await gateway.disconnect();
-        callback('200');
+        
         
     } catch (error) {
         console.error(`Failed to submit transaction: ${error}`);

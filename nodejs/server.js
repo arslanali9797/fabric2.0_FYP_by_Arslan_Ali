@@ -18,7 +18,7 @@ var CNICValidation= require('./validate.js');
 var addRecored = require('./addRecord.js');
 var loginUser = require('./login.js');
 var clientInfo = require('./addCLient.js');
-
+var clientInfoByOne = require ('./searchOneCleintRecord.js');
 //body parser
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -27,14 +27,14 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 
 app.get('/',(req,res)=>{
-res.render('login');
+res.render('login',{notlogin:""});
 
 });
 
 
 
 app.get('/clientLoan',(req,res)=>{
-  res.render('addClientLoan');
+  res.render('addClientLoan',{successNew:""});
   
   });
 
@@ -42,20 +42,50 @@ app.get('/clientLoan',(req,res)=>{
 
 app.post('/loanInfo',(req,res)=>{
 console.log("THIS IS DATA = "+JSON.stringify(req.body));
+
+/* var loanINfo ={
+   "CNIC": req.body.cnic,
+  "First_name": req.
+} */
+
 callback = function(queryResult) { 
-  if (queryResult == '200') {  
-    res.send('ok');  
+  if (queryResult == 'no') {  
+    res.send(' not ok');  
     }
+    if (queryResult == 'yes1'){
+      res.render(loanIfno,{reject:"Loan Is already Issued"})
+      
+    }
+    if (queryResult == "yes"){
+
+      //callback = function(queryResult1){
+
+        //console.log(queryResult1);
+
+
+
+      res.render('addClientLoan',{successNew:"Recored is Added , Loan is issued to Client with this CNIC : "+ req.body.cnic});
+    
+      //clientInfoByOne.searchOne(req.body.cnic,callback);
+    
+    
   
     }    
-
-clientInfo.loanClientInfo(req.body.cnic, req.body.loanType, parseInt(req.body.loanamount), parseInt(req.body.paymentplan),req.body.instalmentdate,callback);
+  }
+clientInfo.loanClientInfo(req.body.cnic, req.body.loan, parseInt(req.body.loanamount), parseInt(req.body.paymentplan),req.body.instalmentdate,callback);
  });
 
 
 
  app.get('/clientLoanInfo',(req,res)=>{
-res.render('clientLoanIfo');
+res.render('clientLoanIfo',{found:""});
+
+
+app.get('/clientLoanInfoSingle',(req,res)=>{
+console.log("client loan INfor with this CNIC "+req.query.clientLoanCNIC);
+res.render('clientLoanIfo',{found:"Result Found"});
+
+});
 
  });
 app.get('/home',(req,res)=>{
@@ -63,17 +93,22 @@ app.get('/home',(req,res)=>{
   
   });
 
-  app.get('/checkLogin',(req,res)=>{
+
+app.post('/Login_Verified',(req,res)=>{
 
 callback = function(queryResult) {
-  if (queryResult='true'){
+  console.log("result query is :"+queryResult);
+  if(queryResult=="true"){
     res.render('Home');
   }
-  else('login');
+  else{
+    res.render('login',{notlogin:"Please make sure the ID or Password is correct"});
+}
 }
 
-
-loginUser.isLogin(callback,req.query.id,req.query.password);
+console.log("id is :"+req.body.id)
+console.log("password is :"+req.body.password);
+loginUser.isLogin(callback,req.body.id,req.body.password);
 
 });
 
@@ -84,10 +119,11 @@ app.get('/show',(req,res)=>{
 
 
 app.get('/add',(req,res)=>{
-res.render('Form')
+res.render('Form',{result:""})
 
 
-})
+});
+
 
 
 
@@ -130,14 +166,14 @@ var clientINfo ={
  var ffinal=0;
 
   callback = function(queryResult) { 
-  if (queryResult == '200') {
+  if (queryResult == 'yes') {
      callback = function(queryResult) { 
       var obj = JSON.parse(queryResult);
      
       clientINfo.finalScoreIs =obj.finale_score
 
       console.log("###############Final Score is ##########"+clientINfo.finalScoreIs);
-      res.render('showResult',{clientINfo});
+      res.render('showResult',{clientINfo,success:'Record is successfuly added'});
 
     }
     
@@ -146,10 +182,30 @@ var clientINfo ={
 
 
 
-} else {
-   res.send("NOt ok");
+} 
+ if (queryResult == 'no1'){
+   
+  res.render('Form',{result:"'The Record with this CNIC : "+clientINfo.CNIC +" is already exist in the Organization"});
   }
+
+  if (queryResult == 'n2'){
+    res.send("NO2 ok");
+  }
+
+  if (queryResult == 'no3'){
+      callback = function(queryResult) { 
+        var obj = JSON.parse(queryResult);
+       
+        clientINfo.finalScoreIs =obj.finale_score
   
+        console.log("###############Final Score is ##########"+clientINfo.finalScoreIs);
+        res.render('showResult',{clientINfo,success:'Record is successfuly added'});
+  
+      }
+      
+      searchOneEntry.searchOne(callback,clientINfo.CNIC);
+    
+    }
  }
 
 addRecored.addClient(clientINfo.CNIC,clientINfo.fname,clientINfo.lname,clientINfo.age,clientINfo.gender,

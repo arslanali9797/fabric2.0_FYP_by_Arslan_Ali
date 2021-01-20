@@ -38,22 +38,56 @@ body, html {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    
+
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+
+</head>    
+
+<script>
+
+function validateForm() {
+
+
+//CNIC
+    var cnic=document.forms["myForm"]["cnic"].value;  
+    var CNICformat = /^[0-9]{5}[0-9]{7}[0-9]{1}$/;
+
+     if(!cnic.match(CNICformat))
+     {
+         alert("Please Enter Valid CNIC");
+      return false}
     
-</head>
+
+      var loanamount = document.forms["myForm"]["loanamount"].value;
+        if(loanamount==""){
+        alert("please INsert Loan amount VALUE");
+        return false}
 
 
-
-
+        var paymentPlan = document.forms["myForm"]["paymentplan"].value;
+        var planFormate = /^[0-9]{1}$/;
+            if((!paymentPlan.match(planFormate)))
+            {alert("Please Enter PLanYear");
+        return false}
 
   
+        var instalmentDate = document.forms["myForm"]["instalmentdate"].value;
+        if(instalmentDate==""){
+        alert("please INsert Instalment Amount Date");
+        return false}
 
-    </script>
+
+       
+     }
+ </script>
 
 
 <body>
 	<div class="bg">
+
+        
 		<div class="container-fluid">
                 <div class="jumbotron" style="background-color:#292b2c">
                     <div class="form-inline">
@@ -90,7 +124,13 @@ body, html {
 
       </div>
 
-
+      <%if (successNew !=''){%>
+		<div class="container">
+      <div class="alert alert-success" role="alert">
+        <%=successNew%>
+        </div>
+        </div>
+<%}%>
 
 
 
@@ -123,11 +163,10 @@ body, html {
                         </div>
                         
                         <div class="py-4 row offset-2">
-                            <select name="loanType" class="my-4 form-control col-5">
-                                <option value="loanType">Service Type</option>
-                                <option value="home">Home Loan</option>
-                                <option value="vehicle">Vehicle Loan</option>
-                                <option value="bussiness">Bussiness Loan</option>         
+                            <select name="loan" class="my-4 form-control col-5">
+                                <option value="Home">Home Loan</option>
+                                <option value="Vehicle">Vehicle Loan</option>
+                                <option value="Bussiness">Bussiness Loan</option>         
                             </select>
                             
 
@@ -145,7 +184,6 @@ body, html {
 	</div>
 
 	
-		
-	</div>
+            
 </body>
 </html>

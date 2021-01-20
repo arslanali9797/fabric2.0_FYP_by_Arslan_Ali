@@ -13,7 +13,7 @@ app.set('view engine','ejs');
 
 
 var searchOneEntry = require('./searchOne.js');
-//var CNICValidation= require('./validate.js');
+var loginUser = require('./login.js');
 var addRecored = require('./addRecord.js');
 
 
@@ -23,13 +23,40 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 
 
+
 app.get('/',(req,res)=>{
-res.render('Home');
-});
+  res.render('login',{notlogin:""});
+  
+  });
+  
+
+app.post('/Login_Verified',(req,res)=>{
+
+  callback = function(queryResult) {
+    console.log("result query is :"+queryResult);
+    if(queryResult=="true"){
+      res.render('Home');
+    }
+    else{
+      res.render('login',{notlogin:"Please make sure the ID or Password is correct"});
+
+    }
+  }
+  
+  console.log("id is :"+req.body.id)
+  console.log("password is :"+req.body.password);
+  loginUser.isLogin(callback,req.body.id,req.body.password);
+  
+  });
+
+
+  app.get('/home',(req,res)=>{
+
+    res.render('Home')
+  });
 
 app.get('/add',(req,res)=>{
-res.render('Form')
-
+  res.render('Form',{result:""})
 
 })
 
@@ -80,7 +107,8 @@ var clientINfo ={
      clientINfo.finalScoreIs =obj.finale_score
 
      console.log("###############Final Score is ##########"+clientINfo.finalScoreIs);
-     res.render('showResult',{clientINfo});
+     res.render('showResult',{clientINfo,success:'Record is successfuly added'});
+
 
    }
    
@@ -89,9 +117,19 @@ var clientINfo ={
 
 
 
-} else {
-  res.send("NOt ok");
- }
+} 
+if (queryResult == 'no1'){
+   
+  res.render('Form',{result:"'The Record with this CNIC : "+clientINfo.CNIC +" is already exist in the Organization"});
+  }
+
+  if (queryResult == 'n2'){
+    res.send("NO2 ok");
+  }
+
+  if (queryResult == 'no3'){
+    res.send("NO3 OK")
+  }
  
 }
 

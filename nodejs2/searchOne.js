@@ -44,7 +44,7 @@ async function main() {
         // Get the contract from the network.
         const contract = network.getContract('fabcar');
 
-        const result = await contract.evaluateTransaction('ReadAsset',cnic+'');
+        const result = await contract.evaluateTransaction('ReadAsset2',cnic,"org2msp");
         // console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
         callback(result.toString());  
 

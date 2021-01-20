@@ -42,11 +42,15 @@ async function main() {
         const contract = network.getContract('fabcar');
 
        
-        await contract.submitTransaction('AddRecord',CNIC,fname,lname,age,gender,martialStatus,assetsValue,depositPerMonth,withdrawPerMonth,savingYears,noTransaction,typeOfBussiness,savingAmount,0,0,0,"org2MSP");
-        console.log('Transaction has been submitted');
-        await gateway.disconnect();
-        callback('200');
+        const result = await contract.submitTransaction('AddRecord',CNIC,fname,lname,age,gender,martialStatus,assetsValue,depositPerMonth,withdrawPerMonth,savingYears,noTransaction,typeOfBussiness,savingAmount,0,0,0,'org1msp');
+        
+        console.log(result.toString());
+        
+        callback(result.toString());
 
+        // Disconnect from the gateway.
+        await gateway.disconnect();
+        
 
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);

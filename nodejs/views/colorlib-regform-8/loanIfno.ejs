@@ -85,62 +85,48 @@ body {
 
                       
           <div class="container">
-
+            
             <div class="alert alert-success" >
-            <strong> Success!</strong>  <%= success%>!
-            </div>
+              <strong> Success!</strong>  <%= successNew%>!
+              </div>
+         
 
             <div class="jumbotron " style="background-color:#D5DBDB; width:1070px ;">
               
                 <div class="row">  
                 <label class="control-label col-sm-2 my-3">First Name  :</label>
-                <label class="control-label col-sm-1  my-3"> <%= clientINfo.fname %> </label>
+              <!--  <label class="control-label col-sm-1  my-3"> <%= clientINfo.First_Name %> </label>  -->
                 <label class="control-label offset-2 col-sm-2  my-3">Last Name  :</label>
-                <label class="control-label col-sm-3  my-3"><%= clientINfo.lname %> </label>
+                <!--<label class="control-label col-sm-3  my-3"><%= clientINfo.Last_Name %> </label> -->
               </div>
 
             <div class="row">
                     <label class="control-label col-sm-2 my-3">CNIC  :</label>
-                    <label class="control-label col-sm-1  my-3"> <%= clientINfo.CNIC %> </label>
-                    <label class="control-label offset-2 col-sm-2  my-3">Age  :</label>
-                    <label class="control-label col-sm-3  my-3"> <%= clientINfo.age %></label>
+               <!--     <label class="control-label col-sm-1  my-3"> <%= clientINfo.CNIC %> </label>    -->
+                    <label class="control-label offset-2 col-sm-2  my-3">Credit Type  :</label>
+                 <!--   <label class="control-label col-sm-3  my-3"> <%= clientINfo.Credit_Type %></label>  -->
             </div>
             
             <div class="row">
-                <label class="control-label col-sm-2 my-3">Gender  :</label>
-                <label class="control-label col-sm-1  my-3">  <%= clientINfo.gender %></label>
-                <label class="control-label offset-2 col-sm-2  my-3">Martial Status  :</label>
-                <label class="control-label col-sm-3  my-3"><%= clientINfo.martialStatue %> </label>
+                <label class="control-label col-sm-2 my-3">Loan Amount  :</label>
+                <!--    <label class="control-label col-sm-1  my-3">  <%= clientINfo.Loan_Amount %></label> -->
+                <label class="control-label offset-2 col-sm-2  my-3">Loan Issue Date  :</label>
+                <!-- <label class="control-label col-sm-3  my-3"><%= clientINfo.IssueLoanDate %> </label>    -->
                 </div>
 
              <div class="row">
-                <label class="control-label col-sm-2 my-3">Assets's Value  :</label>
-                <label class="control-label col-sm-1  my-3">  <%= clientINfo.valueOfAssets %>  </label>
-                <label class="control-label offset-2 col-sm-2  my-3">Deposit per Month  :</label>
-                <label class="control-label col-sm-3  my-3"><%= clientINfo.depositPerMonth %> </label>
+                <label class="control-label col-sm-2 my-3">Payment Plan  :</label>
+              <!--  <label class="control-label col-sm-1  my-3">  <%= clientINfo.PaymentPlan %>  </label> -->
+                <label class="control-label offset-2 col-sm-2  my-3">Instalment Per Month   :</label>
+               <!-- <label class="control-label col-sm-3  my-3"><%= clientINfo.InstalmentPerMonth %> </label>   -->
              </div>
               
              <div class="row">
-                <label class="control-label col-sm-2 my-3">Withdraw Per Month  :</label>
-                <label class="control-label col-sm-1  my-3">  <%= clientINfo.withdrawPerMonth %>  </label>
-                <label class="control-label offset-2 col-sm-2  my-3">Saving Years  :</label>
-                <label class="control-label col-sm-3  my-3"><%= clientINfo.savingYears %> </label>
+                <label class="control-label col-sm-2 my-3">Payment Date  :</label>
+                <!--<label class="control-label col-sm-1  my-3">  <%= clientINfo.PaymentDate %>  </label> -->
+                
              </div>
 
-             <div class="row">
-                <label class="control-label col-sm-2 my-3">Transactions Per Month  :</label>
-                <label class="control-label col-sm-1  my-3"> <%= clientINfo.transactionPerMonth %> </label>
-                <label class="control-label offset-2 col-sm-2  my-3">Current Saving Amount  :</label>
-                <label class="control-label col-sm-3  my-3"><%= clientINfo.savingAmount %> </label>
-             </div>
-
-
-             <div class="row">
-                <label class="control-label col-sm-2 my-3">Income Type  :</label>
-                <label class="control-label col-sm-1  my-3"> <%= clientINfo.typeOfBussiness %> </label>
-                <label class="control-label offset-2 col-sm-2  my-3">Credit Score  :</label>
-                <label class="control-label col-sm-3  my-3"><%= clientINfo.finalScoreIs %> </label>
-             </div>
 
             </div>
 
@@ -150,7 +136,6 @@ body {
 
 
 
-        </div>
         </div>
 
            <!-- JS -->

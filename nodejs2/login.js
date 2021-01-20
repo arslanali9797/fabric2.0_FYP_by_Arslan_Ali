@@ -1,10 +1,4 @@
-
-
-
-//,'4550503812444','car loan','org1MSP','azhar' ,'durani',100000,'2/3/2020',2,50000,'28');
-module.exports.loanClientInfo = function(cnic,loanType,loanAmount,yearPlan,depositeDate,callback){
-
-
+module.exports.isLogin = function(callback,id,password){
 
 
     /*
@@ -13,16 +7,16 @@ module.exports.loanClientInfo = function(cnic,loanType,loanAmount,yearPlan,depos
     
     'use strict';
     
-    
     const { Gateway, Wallets } = require('fabric-network');
-    const fs = require('fs');
     const path = require('path');
+    const fs = require('fs');
+    
     
     async function main() {
         try {
             // load the network configuration
-            const ccpPath = path.resolve(__dirname, '..',  'connection', 'connection-org1.json');
-            let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
+            const ccpPath = path.resolve(__dirname, '..',  'connection', 'connection-org2.json');
+            const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
     
             // Create a new file system based wallet for managing identities.
             const walletPath = path.join(process.cwd(), 'wallet');
@@ -30,39 +24,42 @@ module.exports.loanClientInfo = function(cnic,loanType,loanAmount,yearPlan,depos
             console.log(`Wallet path: ${walletPath}`);
     
             // Check to see if we've already enrolled the user.
-            const identity = await wallet.get('appUser');
+            const identity = await wallet.get('org2appUser1');
             if (!identity) {
-                console.log('An identity for the user "appUser" does not exist in the wallet');
+                console.log('An identity for the user "org2appUser1" does not exist in the wallet');
                 console.log('Run the registerUser.js application before retrying');
                 return;
             }
     
             // Create a new gateway for connecting to our peer node.
             const gateway = new Gateway();
-            await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
+            await gateway.connect(ccp, { wallet, identity: 'org2appUser1', discovery: { enabled: true, asLocalhost: true } });
     
             // Get the network (channel) our contract is deployed to.
             const network = await gateway.getNetwork('mychannel');
     
             // Get the contract from the network.
             const contract = network.getContract('fabcar');
-
-
-       const  result = await contract.submitTransaction('ClientPrivateRecord',cnic,loanType,loanAmount,'18/01/2021',yearPlan,depositeDate,'org1loan','org1msp');
-       console.log(result.toString());
-        
-       callback(result.toString());
-
-       // Disconnect from the gateway.
-       await gateway.disconnect();
+    
+           
+            console.log("id and password in login.js file "+id+'  and  '+password);
+            const result = await contract.evaluateTransaction('LoginUser',id+'org2msp',password);
+            console.log(`Login Result has been evaluated, result is: ${result.toString()}`);
+            
+            
+            callback(result.toString());
+    
+            // Disconnect from the gateway.
+            await gateway.disconnect();
 
             
+    
+    
         } catch (error) {
-            console.error(`Failed to submit transaction: ${error}`);
+            console.error(`Failed to evaluate transaction: ${error}`);
             process.exit(1);
         }
     }
     
     main();
-    
-}
+    }

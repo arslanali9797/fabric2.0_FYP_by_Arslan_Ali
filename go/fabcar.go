@@ -85,6 +85,10 @@ type UserDetails struct {
 
 type ClientPrivateData struct {
 	CNIC 	 					  string 	   `json:"CNIC"` 
+
+	First_Name					string			`json:"first_name"`
+
+	Last_Name 					string			`json:"last_name"`
 	
 	Credit_Type					  string 		`json:"credit_type"`
 
@@ -115,7 +119,7 @@ func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) 
 			return err
 		  }	
 
-		err1 := ctx.GetStub().PutState(assetInfo.CNIC, assetJSON)
+		err1 := ctx.GetStub().PutState(assetInfo.CNIC+"org1msp", assetJSON)
 		if err1 != nil {
 			return fmt.Errorf("Failed to put to world state. %s", err.Error())}
 		}
@@ -139,8 +143,12 @@ func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) 
 	return nil
 }
 
-func (s *SmartContract) AddRecord(ctx contractapi.TransactionContextInterface, CNIC string, fname string,lname string, age int,gender string,marital_status string,value_of_assets int,deposit_per_month int,withdraw_per_month int ,has_been_saving_for_years int,transaction_per_month_average int, type_of_bussiness string,saving_amount int,bank1_score int ,bank2_score int ,final_Score int,msporg string) error {
+func (s *SmartContract) AddRecord(ctx contractapi.TransactionContextInterface, CNIC string, fname string,lname string, age int,gender string,marital_status string,value_of_assets int,deposit_per_month int,withdraw_per_month int ,has_been_saving_for_years int,transaction_per_month_average int, type_of_bussiness string,saving_amount int,bank1_score int ,bank2_score int ,final_Score int,msporg string) string {
 	
+	if(msporg=="org1msp"){
+		ClientRecord , err :=s.ReadAssetOrg(ctx,CNIC,msporg)
+
+		if err !=nil{
 
 
 	var genderIs= genderF(gender)
@@ -156,11 +164,16 @@ func (s *SmartContract) AddRecord(ctx contractapi.TransactionContextInterface, C
 	var bank1_scoreN =0
 	var bank2_scoreN = 0
 
-	if (msporg=="org1MSP"){
+	if (msporg=="org1msp"){
 	 	bank1_scoreN = genderIs+ageIs+maritalStatus+assetValue+depositPerMmonth+withdrawPerMonth+hasBeenSavingForYears+transactionPerMonthAverage+typeOfBussiness+savingAmount
-	}else if (msporg=="org2MSP"){
+	}else if (msporg=="org2msp"){
 		bank2_scoreN = genderIs+ageIs+maritalStatus+assetValue+depositPerMmonth+withdrawPerMonth+hasBeenSavingForYears+transactionPerMonthAverage+typeOfBussiness+savingAmount	
 	}
+
+
+
+
+
 
 	var final_ScoreN  = 0
 
@@ -173,33 +186,130 @@ func (s *SmartContract) AddRecord(ctx contractapi.TransactionContextInterface, C
 	}
 	
 
-	assetInfo := AssetInfo{
+				assetInfo := AssetInfo{
 
-		CNIC:									CNIC,
-		F_name:									fname, 
-		L_name:									lname, 
-		Age: 									age,
-		Gender: 								gender,
-		Marital_status: 						marital_status,
-		Value_Of_Assets: 						value_of_assets,
-		Deposit_Per_Month: 						deposit_per_month,
-		Withdraw_Per_Month: 					withdraw_per_month,
-		Has_Been_Saving_For_Years:				has_been_saving_for_years,
-		Transaction_Per_Month_Average:  		transaction_per_month_average,
-	    Type_Of_Bussiness: 						type_of_bussiness,
-	    Saving_Amount:  						saving_amount,
-		Bank1_Score: 							bank1_scoreN, 
-		Bank2_Score: 							bank2_scoreN, 
-		Final_Score: 							final_ScoreN,
-		MspOrg:									msporg,
+					CNIC:									CNIC,
+					F_name:									fname, 
+					L_name:									lname, 
+					Age: 									age,
+					Gender: 								gender,
+					Marital_status: 						marital_status,
+					Value_Of_Assets: 						value_of_assets,
+					Deposit_Per_Month: 						deposit_per_month,
+					Withdraw_Per_Month: 					withdraw_per_month,
+					Has_Been_Saving_For_Years:				has_been_saving_for_years,
+					Transaction_Per_Month_Average:  		transaction_per_month_average,
+					Type_Of_Bussiness: 						type_of_bussiness,
+					Saving_Amount:  						saving_amount,
+					Bank1_Score: 							bank1_scoreN, 
+					Bank2_Score: 							bank2_scoreN, 
+					Final_Score: 							final_ScoreN,
+					MspOrg:									msporg,
+				
+				}
+				assetInfoBytes, _ := json.Marshal(assetInfo)
+				err := ctx.GetStub().PutState(CNIC+msporg, assetInfoBytes)
+				
+				if(err != nil){
+
+					return "yes"
+				}
+				
+				
+
+			}
+			if (ClientRecord != nil){
+				return "no1"
 	
+			}
+		}
+
+
+			if(msporg=="org2msp"){
+				ClientRecord2 , err2 :=s.ReadAssetOrg(ctx,CNIC,msporg)
+	
+				if err2 !=nil{
+
+					var genderIs= genderF(gender)
+	var ageIs = ageF(age)
+	var maritalStatus= martialStatusF(marital_status)
+	var assetValue = assetsValueF(value_of_assets)	
+	var depositPerMmonth = monthlyDepositsF(deposit_per_month)
+	var withdrawPerMonth= monthlyWithdrawF(withdraw_per_month)
+	var hasBeenSavingForYears = savingYearsF(has_been_saving_for_years)
+	var transactionPerMonthAverage = monthlyTransactionF(transaction_per_month_average)
+	var typeOfBussiness = bussinessTypeF(type_of_bussiness)
+	var savingAmount = currentSavingAmountF(saving_amount) 
+	var bank1_scoreN =0
+	var bank2_scoreN = 0
+
+	if (msporg=="org1msp"){
+	 	bank1_scoreN = genderIs+ageIs+maritalStatus+assetValue+depositPerMmonth+withdrawPerMonth+hasBeenSavingForYears+transactionPerMonthAverage+typeOfBussiness+savingAmount
+	}else if (msporg=="org2msp"){
+		bank2_scoreN = genderIs+ageIs+maritalStatus+assetValue+depositPerMmonth+withdrawPerMonth+hasBeenSavingForYears+transactionPerMonthAverage+typeOfBussiness+savingAmount	
 	}
 
-	assetInfoBytes, _ := json.Marshal(assetInfo)
+	var final_ScoreN  = 0	
 
-	return ctx.GetStub().PutState(CNIC, assetInfoBytes)
+	if(bank1_scoreN==0){
+	 	final_ScoreN = bank2_scoreN 
+	}else if (bank2_scoreN==0){
+		final_ScoreN = bank1_scoreN
+	}else {
+		final_ScoreN = (bank2_scoreN+bank1_scoreN)/2
+	}
+	
 
-}
+				assetInfo := AssetInfo{
+
+					CNIC:									CNIC,
+					F_name:									fname, 
+					L_name:									lname, 
+					Age: 									age,
+					Gender: 								gender,
+					Marital_status: 						marital_status,
+					Value_Of_Assets: 						value_of_assets,
+					Deposit_Per_Month: 						deposit_per_month,
+					Withdraw_Per_Month: 					withdraw_per_month,
+					Has_Been_Saving_For_Years:				has_been_saving_for_years,
+					Transaction_Per_Month_Average:  		transaction_per_month_average,
+					Type_Of_Bussiness: 						type_of_bussiness,
+					Saving_Amount:  						saving_amount,
+					Bank1_Score: 							bank1_scoreN, 
+					Bank2_Score: 							bank2_scoreN, 
+					Final_Score: 							final_ScoreN,
+					MspOrg:									msporg,
+				
+				}
+				assetInfoBytes, _ := json.Marshal(assetInfo)
+				
+				err := ctx.GetStub().PutState(CNIC+msporg, assetInfoBytes)
+				
+				if(err != nil){
+
+					return "yes"
+				}
+	
+				}
+				if(ClientRecord2 != nil){
+
+						return "no2";
+		
+				}
+
+		}
+
+		return "no3"
+
+ 
+} 
+	
+	
+		
+	
+	
+
+
 
 
 //gender Function
@@ -328,13 +438,13 @@ func bussinessTypeF(Bname string)(int ){
 }
  
 
-func (s *SmartContract) ClientPrivateRecord(ctx contractapi.TransactionContextInterface, CNICloan string,credit_type string,loan_amount float64 ,issue_loandate string,payment_plan float64,payment_date string,orgloan string) error {
+func (s *SmartContract) ClientPrivateRecord(ctx contractapi.TransactionContextInterface, CNICloan string,credit_type string,loan_amount float64 ,issue_loandate string,payment_plan float64,payment_date string,orgloan string,msporg string) string {
 	
 
-	clientLoan, err := s.ReadAsset(ctx, CNICloan)
+	clientLoan, err := s.ReadAsset(ctx, CNICloan,msporg)
 
 	if err != nil {
-		return fmt.Errorf(`CLient Does not Exist`);
+		return  "no";
 	}
 
 	if  clientLoan.CNIC==CNICloan{
@@ -343,6 +453,8 @@ func (s *SmartContract) ClientPrivateRecord(ctx contractapi.TransactionContextIn
 
 		clientInfo := ClientPrivateData{
 		CNIC:				CNICloan+orgloan,				//cinc unique with cnic+orgMSPloan 
+		First_Name:			clientLoan.F_name,
+		Last_Name: 			clientLoan.L_name,
 		Credit_Type:		credit_type,			
 		Loan_Amount:		loan_amount,
 		IssueLoanDate:		issue_loandate,
@@ -352,11 +464,14 @@ func (s *SmartContract) ClientPrivateRecord(ctx contractapi.TransactionContextIn
 	}
 	
 		clientInfoBytes, _ := json.Marshal(clientInfo)
-		return ctx.GetStub().PutState(CNICloan+orgloan, clientInfoBytes)
-
+		 
+		err :=ctx.GetStub().PutState(CNICloan+orgloan, clientInfoBytes)
+		
+		if(err !=nil){
+		return "yes1"}
 	}
 
-		return fmt.Errorf (`CLient Exist`);
+ 		return "yes"
 
 
 	
@@ -375,6 +490,29 @@ func paymantPlanF( amount float64,year float64)(float64){
 	}
 	return amount/60
 }
+
+
+
+func (s *SmartContract) GetOneClientRecord(ctx contractapi.TransactionContextInterface, CNIC string ,orgloan string) (*ClientPrivateData, error) {
+	
+	var searchCNIC string = CNIC+orgloan
+	assetJSON, err := ctx.GetStub().GetState(searchCNIC)
+	if err != nil {
+	  return nil, fmt.Errorf("failed to read from world state: %v", err)
+	}
+	if assetJSON == nil {
+	  return nil, fmt.Errorf("the asset %s does not exist", searchCNIC)
+	}
+  
+	var asset ClientPrivateData
+	err = json.Unmarshal(assetJSON, &asset)
+	if err != nil {
+	  return nil, err
+	}
+  
+	return &asset, nil
+  }
+  
 
 
 func (s *SmartContract) GetAllClientLoan(ctx contractapi.TransactionContextInterface) ([]*ClientPrivateData, error) {
@@ -400,7 +538,7 @@ func (s *SmartContract) GetAllClientLoan(ctx contractapi.TransactionContextInter
 		return nil, err
 	  }
 
-	  if((strings.Contains(asset.CNIC, "org"))){
+	  if((strings.Contains(asset.CNIC, "org1loan"))){
 		assets = append(assets, &asset)
 	} 
 	  
@@ -491,13 +629,57 @@ func (s *SmartContract) GetAllAssets(ctx contractapi.TransactionContextInterface
 
 
 // ReadAsset returns the asset stored in the world state with given id.
-func (s *SmartContract) ReadAsset(ctx contractapi.TransactionContextInterface, CNIC string) (*AssetInfo, error) {
-	assetJSON, err := ctx.GetStub().GetState(CNIC)
+func (s *SmartContract) ReadAsset(ctx contractapi.TransactionContextInterface, CNIC string,msporg string) (*AssetInfo, error) {
+
+  showRecord1 , err1 :=s.ReadAssetOrg(ctx, CNIC, msporg)
+
+  	if err1 != nil{
+		
+		showRecord2 , err2 :=s.ReadAssetOrg(ctx, CNIC, "org2msp" )
+		
+		if err2 != nil{
+			
+			return nil, fmt.Errorf("Record not found in any Organizations With CNIC No: "+CNIC, err2)
+		}else{
+			return showRecord2, nil
+		}
+
+		}else {	return showRecord1, nil}
+
+	}
+	
+
+	func (s *SmartContract) ReadAsset2(ctx contractapi.TransactionContextInterface, CNIC string,msporg string) (*AssetInfo, error) {
+
+		showRecord1 , err1 :=s.ReadAssetOrg(ctx, CNIC, msporg)
+	  
+			if err1 != nil{
+			  
+			  showRecord2 , err2 :=s.ReadAssetOrg(ctx, CNIC, "org1msp" )
+			  
+			  if err2 != nil{
+				  
+				  return nil, fmt.Errorf("Record not found in any Organizations With CNIC No: "+CNIC, err2)
+			  }else{
+				  return showRecord2, nil
+			  }
+	  
+			  }else {	return showRecord1, nil}
+	  
+		  }
+
+
+
+
+  func (s *SmartContract) ReadAssetOrg(ctx contractapi.TransactionContextInterface, CNIC string ,msporg string) (*AssetInfo, error) {
+	
+	var searchCNIC string = CNIC+msporg
+	assetJSON, err := ctx.GetStub().GetState(searchCNIC)
 	if err != nil {
 	  return nil, fmt.Errorf("failed to read from world state: %v", err)
 	}
 	if assetJSON == nil {
-	  return nil, fmt.Errorf("the asset %s does not exist", CNIC)
+	  return nil, fmt.Errorf("the asset %s does not exist", searchCNIC)
 	}
   
 	var asset AssetInfo
@@ -509,6 +691,9 @@ func (s *SmartContract) ReadAsset(ctx contractapi.TransactionContextInterface, C
 	return &asset, nil
   }
   
+  
+
+
 
 
 
@@ -539,7 +724,7 @@ func (s *SmartContract) ReadUser(ctx contractapi.TransactionContextInterface, Id
 	user, err := s.ReadUser(ctx, Id)
 
 	if err != nil {
-		return `The error is in LoginQuery`
+		return `ID and Password is incorrect`
 	}
 	
   check := ``

@@ -33,7 +33,7 @@ async function main() {
         const gateway = new Gateway();
         await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
 
-        // Get the network (channel) our contract is deployed to.
+        // Get the network (channel) our contract is deployed to. 
         const network = await gateway.getNetwork('mychannel');
 
         // Get the contract from the network.
@@ -42,7 +42,9 @@ async function main() {
         // Evaluate the specified transaction.
         // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
         // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
-        const result = await contract.evaluateTransaction('ReadUser',b1+'org1msp');
+
+        //      const result = await contract.evaluateTransaction('GetOneClientRecord','4550503812465','org1loan');
+        const result = await contract.evaluateTransaction('GetAllClientLoan');
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
     } catch (error) {
