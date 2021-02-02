@@ -92,7 +92,14 @@ function validateform(){
                  </a>
 
 
-                   
+                 
+                 <div class="bg">
+                  <%if (notFound !=''){%>
+                  <div class="container">
+                    <div class="alert alert-danger" role="alert">
+                      <%=notFound%>
+                      </div>
+                <%}%>  
       <div class="container-fluid py-3">
        
         <form name="myform" method='GET' action="/findOne" onsubmit="return validateform()">

@@ -42,7 +42,7 @@ async function main() {
         const contract = network.getContract('fabcar');
 
        
-        const result = await contract.submitTransaction('AddRecord',CNIC,fname,lname,age,gender,martialStatus,assetsValue,depositPerMonth,withdrawPerMonth,savingYears,noTransaction,typeOfBussiness,savingAmount,0,0,0,'org1msp');
+        const result = await contract.submitTransaction('AddRecord',CNIC,fname,lname,age,gender,martialStatus,assetsValue,depositPerMonth,withdrawPerMonth,savingYears,noTransaction,typeOfBussiness,savingAmount,0,0,0,'org2msp');
         
         console.log(result.toString());
         

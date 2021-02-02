@@ -50,18 +50,16 @@ body {
 
 <body background-color:#f7f7f7>
     <div class="container-fluid">
-                   <div class="jumbotron" style="background-color:#580092">
+                   <div class="jumbotron" style="background-color:#292b2c">
                        <div class="form-inline">
                            <div class="col-3 text-light">
-                               <h1>Bank_2</h1>
+                               <h1>Bank_1</h1>
                            </div>
                            <div class="text-center text-info">
                                <h1>Decentralized Credit Score System (DCSS)</h1>
                            </div>
                        </div>
                    </div>
-                   
-                   
                    <a href="/home">
                     <button type="submit" class="btn btn-info offset-5 col-1" >Home  </button>
                     </a>
@@ -81,16 +79,17 @@ body {
                      <a href="/clientLoanInfo">
                         <button type="sub mit" class="btn btn-info col-1.5" >Loan Information</button>
                    </a>
-   
+
+
    
 
                       
           <div class="container">
 
             <div class="alert alert-success" >
-              <strong> Success!</strong>  <%= success%>!
-              </div>  
-              
+            <strong> Success!</strong>  <%= success%>!
+            </div>
+
             <div class="jumbotron " style="background-color:#D5DBDB; width:1070px ;">
               
                 <div class="row">  
@@ -139,8 +138,8 @@ body {
              <div class="row">
                 <label class="control-label col-sm-2 my-3">Income Type  :</label>
                 <label class="control-label col-sm-1  my-3"> <%= clientINfo.typeOfBussiness %> </label>
-                <label class="control-label offset-2 col-sm-2  my-3">Credit Score  :</label>
-                <label class="control-label col-sm-3  my-3"><%= clientINfo.finalScoreIs %> </label>
+                <label class="control-label offset-2 col-sm-2  my-3"><h5>  Credit Score : </h5></label>
+                <label class="control-label col-sm-3  my-3"> <h5>  <%= clientINfo.finalScoreIs %>  </h5></label>
              </div>
 
             </div>

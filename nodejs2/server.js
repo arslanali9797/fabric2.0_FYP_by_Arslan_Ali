@@ -15,6 +15,8 @@ app.set('view engine','ejs');
 var searchOneEntry = require('./searchOne.js');
 var loginUser = require('./login.js');
 var addRecored = require('./addRecord.js');
+var clientInfo = require('./addCLient.js');
+var clientInfoByOne = require ('./searchOneCLientRecord.js');
 
 
 //body parser
@@ -28,7 +30,112 @@ app.get('/',(req,res)=>{
   res.render('login',{notlogin:""});
   
   });
+
   
+
+  app.get('/clientLoan',(req,res)=>{
+    res.render('addClientLoan',{errorIsHere:""});
+    
+    });
+  
+  app.post('/loanInfo',(req,res)=>{
+  
+  console.log("THIS IS DATA loan Info = "+JSON.stringify(req.body));
+  console.log("this is it");
+  console.log("query Result 1:")
+  
+  callback = function(queryResult0){
+  
+    if(queryResult0==""){
+      console.log("EMPTY QYERY Reuslt:")
+      res.render('addClientLoan',{errorIsHere:" No prior Record Found with This CNIC : "+ req.body.cnic});}
+      else {
+
+    callback = function(queryResult) {
+    console.log("loan result "+queryResult)
+    console.log("query Result 2:"+ typeof queryResult)
+     if (queryResult == 'alreadyIssued'){
+        //res.render(loanIfno,{reject:"Loan Is already Issued"})
+        res.render('addClientLoan',{errorIsHere:" Loan is Already is Isssued To Given CNIC : "+ req.body.cnic});}
+    if (queryResult == "errorIsHere"){
+        callback = function(queryResult1){
+         var obj = JSON.parse(queryResult1);
+          console.log(obj.CNIC);
+          console.log(obj.first_name);
+          console.log(obj.last_name);
+          console.log(obj.credit_type);
+          console.log(obj.loan_amount);
+          console.log(obj.issue_loandate);
+          console.log(obj.payment_plan);
+          console.log(obj.instalment_per_month);
+          console.log(obj.payment_date);
+          console.log(obj.Credit_Score_Is);
+          
+          var loanIssuedInfo = {
+            "CNIC":             obj.CNIC,
+            "fname":            obj.first_name,
+            "lname":            obj.last_name,
+            "credit_Type":      obj.credit_type,
+            "loan_Amount":      obj.loan_amount,
+            "loan_Issue_Date":  obj.issue_loandate,
+            "paymant_Plan":     obj.payment_plan,
+            "Installment_Per_Month": obj.instalment_per_month,
+            "paymant_Date":     obj.payment_date,
+            "final_Score":      obj.Credit_Score_Is,}
+          res.render('showClientRecord',{loanIssuedInfo,RecordAdded:"Recored is Added , Loan is issued to Client with this CNIC : "+ req.body.cnic});}
+        clientInfoByOne.searchOneClient(req.body.cnic,callback);}     }
+  clientInfo.loanClientInfo(req.body.cnic, req.body.loan, parseInt(req.body.loanamount), parseInt(req.body.paymentplan),req.body.instalmentdate,callback);
+  }
+  }
+  
+  searchOneEntry.queryOne(callback,req.body.cnic);
+  
+  
+  });
+
+
+
+  app.get('/clientLoanInfo',(req,res)=>{
+
+    res.render('foundOneCLientRecord',{errorIsHere:""});
+  });
+
+
+
+  app.get('/foundCLientLoanRecord',(req,res)=>{
+    console.log("Searching CNIC");
+    console.log("Searching CNIC : "+ req.query.ClientSearchCnic +"  AND Type is : "+typeof (req.query.ClientSearchCnic));
+  
+    callback = function(queryResult){
+
+      if(queryResult==""){
+        console.log("EMPTY QYERY Reuslt:");
+       res.render('foundOneCLientRecord',{errorIsHere:" No prior Record Found with This CNIC : "+ req.query.ClientSearchCnic});
+
+      }else{
+
+      console.log("inside callback function : "+queryResult)
+      console.log("inside callback function : "+ typeof queryResult)
+
+      var obj = JSON.parse(queryResult);
+      console.log(obj.CNIC);
+      console.log(obj.first_name);
+      console.log(obj.last_name);
+      console.log(obj.credit_type);
+      console.log(obj.loan_amount);
+      console.log(obj.issue_loandate);
+      console.log(obj.payment_plan);
+      console.log(obj.instalment_per_month);
+      console.log(obj.payment_date);
+      console.log(obj.Credit_Score_Is);
+     
+      }
+
+             }
+  
+     clientInfoByOne.searchOneClient(req.query.ClientSearchCnic,callback);
+  });  
+
 
 app.post('/Login_Verified',(req,res)=>{
 
@@ -127,9 +234,20 @@ if (queryResult == 'no1'){
     res.send("NO2 ok");
   }
 
-  if (queryResult == 'no3'){
-    res.send("NO3 OK")
-  }
+ if (queryResult == 'no3'){
+      callback = function(queryResult) { 
+        var obj = JSON.parse(queryResult);
+       
+        clientINfo.finalScoreIs =obj.finale_score
+  
+        console.log("###############Final Score is ##########"+clientINfo.finalScoreIs);
+        res.render('showResult',{clientINfo,success:'Record is successfuly added'});
+  
+      }
+      
+      searchOneEntry.queryOne(callback,clientINfo.CNIC);
+    
+    }
  
 }
 
@@ -150,7 +268,7 @@ addRecored.addClient(clientINfo.CNIC,clientINfo.fname,clientINfo.lname,clientINf
 app.get('/find',(req,res)=>{
 
   
- res.render('Find');   
+ res.render('Find',{notFound:""});   
 });
 
 
@@ -176,20 +294,32 @@ console.log("search with this cnic :"+req.query.search)
 
 
            callback = function(queryResult) { 
-           // console.log(queryResult);
+            console.log("1")
+            console.log("Type of Query Result:"+typeof queryResult)
+
+            if(queryResult==""){
+              console.log("EMPTY QYERY Reuslt:")
+              res.render('Find',{notFound:"Record Not Found"});
+
+
+            }else{
             var obj = JSON.parse(queryResult);
-            
+            console.log("2")  
+            console.log("Type is "+typeof obj);
+
+              if (Object.keys(obj).length === 0) {
+                console.log("empty")              } 
+                else {
+                  console.log("not empty")
+              }
+
+            console.log("Query Result is : "+obj);
             Fname=obj.fname
             Lname=obj.lname
             CNIC=obj.CNIC
             bank1=obj.bank1_score
             bank2=obj.bank2_score
             final=obj.finale_score
-
-
-
-
-
     var data ={
         "name": Fname+" "+Lname,
         "CNIC":CNIC,
@@ -197,13 +327,15 @@ console.log("search with this cnic :"+req.query.search)
         "bank2":bank2,
         "final":final
        }
-    
+
     console.log("found Result");
     //console.log("this is data ");
     
-     res.render('FindOne',{data});
+     res.render('FindOne',{data,notFound:""});
      //res.render('Find');
+
     }
+  }
     searchOneEntry.queryOne(callback,cnic);
 
     });

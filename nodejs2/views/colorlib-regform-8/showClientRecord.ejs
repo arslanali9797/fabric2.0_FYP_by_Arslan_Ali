@@ -1,0 +1,156 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    .block {
+  display: block;
+  width:20%;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+</style>
+
+
+
+    <!-- <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
+    <title>Sign Up Form by Colorlib</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <!-- Font Icon -->
+    <!-- <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css"> -->
+
+    <!-- Main css -->
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <style>
+
+
+
+
+body {
+  background-color:white
+}
+</style>
+</head>
+
+
+
+
+
+<body background-color:#f7f7f7>
+    
+ <div class="container-fluid">
+  <div class="jumbotron" style="background-color:#580092">
+      <div class="form-inline">
+          <div class="col-3 text-light">
+              <h1>Bank_2</h1>
+          </div>
+          <div class="text-center text-info">
+              <h1>Decentralized Credit Score System (DCSS)</h1>
+          </div>
+      </div>
+  </div>
+                   <a href="/home">
+                    <button type="submit" class="btn btn-info offset-5 col-1" >Home  </button>
+                    </a>
+  
+                    <a href = "/add">
+                        <button type="submit" class="btn btn-info col-1.5" >Add Record</button>
+                        </a>
+  
+                      </a>
+                      <a href="/find">
+                        <button type="submit" class="btn btn-info col-1" > Find  </button>
+                      </a>
+  
+                    <a href="/clientLoan">
+                     <button type="sub mit" class="btn btn-info col-1.5" >Client Loan</button>
+                
+                     <a href="/clientLoanInfo">
+                        <button type="sub mit" class="btn btn-info col-1.5" >Loan Information</button>
+                   </a>
+
+
+   
+
+
+
+            </div>
+
+
+                      
+          <div class="container">
+            
+            <div class="alert alert-success" >
+              <strong> Success !</strong>  <%= RecordAdded%>!
+              </div>
+         
+
+            <div class="jumbotron " style="background-color:#D5DBDB; width:1070px ;">
+              
+                <div class="row">  
+                <label class="control-label col-sm-2 my-3">First Name  :</label>
+                <label class="control-label col-sm-1  my-3"> <%= loanIssuedInfo.fname %> </label> 
+                <label class="control-label offset-2 col-sm-2  my-3">Last Name  :</label>
+                <label class="control-label col-sm-3  my-3"><%= loanIssuedInfo.lname %> </label> 
+              </div>
+
+            <div class="row">
+                    <label class="control-label col-sm-2 my-3">CNIC  :</label>
+                  <label class="control-label col-sm-1  my-3"> <%= loanIssuedInfo.CNIC %> </label>    
+                    <label class="control-label offset-2 col-sm-2  my-3">Credit Type  :</label>
+                <label class="control-label col-sm-3  my-3"> <%= loanIssuedInfo.credit_Type %></label> 
+            </div>
+            
+            <div class="row">
+                <label class="control-label col-sm-2 my-3">Loan Amount  :</label>
+               <label class="control-label col-sm-1  my-3">  <%= loanIssuedInfo.loan_Amount %></label> 
+                <label class="control-label offset-2 col-sm-2  my-3">Loan Issue Date  :</label>
+                 <label class="control-label col-sm-3  my-3"><%= loanIssuedInfo.loan_Issue_Date %> </label>    
+                </div>
+
+             <div class="row">
+                <label class="control-label col-sm-2 my-3">Payment Plan  :</label>
+          <label class="control-label col-sm-1  my-3">  <%= loanIssuedInfo.paymant_Plan %> year </label> 
+                <label class="control-label offset-2 col-sm-2  my-3">Instalment Per Month   :</label>
+                <label class="control-label col-sm-3  my-3"><%= loanIssuedInfo.Installment_Per_Month %> </label>  
+             </div>
+              
+             <div class="row">
+                <label class="control-label col-sm-2 my-3">Payment Date  :</label>
+               <label class="control-label col-sm-1  my-3">  <%= loanIssuedInfo.paymant_Date %>  </label> 
+
+               <label class="control-label offset-2 col-sm-2  my-3">Credit Score   :</label>
+                <label class="control-label col-sm-3  my-3"><%= loanIssuedInfo.final_Score %> </label>  
+                
+             </div>
+
+
+            </div>
+
+
+
+         
+
+
+
+
+     
+
+           <!-- JS -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>
+

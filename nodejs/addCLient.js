@@ -48,7 +48,7 @@ module.exports.loanClientInfo = function(cnic,loanType,loanAmount,yearPlan,depos
             const contract = network.getContract('fabcar');
 
 
-       const  result = await contract.submitTransaction('ClientPrivateRecord',cnic,loanType,loanAmount,'18/01/2021',yearPlan,depositeDate,'org1loan','org1msp');
+       const  result = await contract.submitTransaction('ClientPrivateRecord',cnic,loanType,loanAmount,'01/02/2021',yearPlan,depositeDate,'org1loan','org1msp');
        console.log(result.toString());
         
        callback(result.toString());

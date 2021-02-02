@@ -1,7 +1,10 @@
-module.exports.isLogin = function(callback,id,password){
+module.exports.searchOneClient = function(cnic,callback){
 
-
-    /*
+    console.log(cnic);
+    
+    
+    
+        /*
      * SPDX-License-Identifier: Apache-2.0
      */
     
@@ -41,25 +44,20 @@ module.exports.isLogin = function(callback,id,password){
             // Get the contract from the network.
             const contract = network.getContract('fabcar');
     
-           
-            console.log("id and password in login.js file "+id+'  and  '+password);
-            const result = await contract.evaluateTransaction('LoginUser',id+'org2msp',password);
-            console.log(`Login Result has been evaluated, result is: ${result.toString()}`);
-            
-            
-            callback(result.toString());
-    
-            // Disconnect from the gateway.
-            await gateway.disconnect();
+            const result = await contract.evaluateTransaction('FindOneClientRecord',cnic,'org2loan');
+            console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
-            
-    
-    
-        } catch (error) {
+            callback(result.toString());
+
+       await gateway.disconnect();
+
+       } catch (error) {
             console.error(`Failed to evaluate transaction: ${error}`);
             process.exit(1);
         }
-    }
+        }
+    
     
     main();
     }
+    

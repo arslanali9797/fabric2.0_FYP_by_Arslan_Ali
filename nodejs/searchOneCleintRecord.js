@@ -3,7 +3,7 @@
  */
 
 
-module.exports.searchOne = function(cnic,callback){
+module.exports.searchOneClient = function(cnic,callback){
 
     'use strict';
     
@@ -44,7 +44,7 @@ module.exports.searchOne = function(cnic,callback){
             // Evaluate the specified transaction.
             // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
             // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
-             const result = await contract.evaluateTransaction('GetOneClientRecord',cnic,'org1loan');
+             const result = await contract.evaluateTransaction('FindOneClientRecord',cnic,'org1loan');
              console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
              callback(result.toString());

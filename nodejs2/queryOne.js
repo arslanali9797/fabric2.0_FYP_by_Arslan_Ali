@@ -2,9 +2,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
-module.exports.searchOne = function(callback,cnic){
-
 'use strict';
 
 const { Gateway, Wallets } = require('fabric-network');
@@ -15,7 +12,7 @@ const fs = require('fs');
 async function main() {
     try {
         // load the network configuration
-        const ccpPath = path.resolve(__dirname, '..',  'connection', 'connection-org1.json');
+        const ccpPath = path.resolve(__dirname, '..',  'connection', 'connection-org2.json');
         const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
         // Create a new file system based wallet for managing identities.
@@ -24,16 +21,16 @@ async function main() {
         console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the user.
-        const identity = await wallet.get('appUser');
+        const identity = await wallet.get('org2appUser1');
         if (!identity) {
-            console.log('An identity for the user "appUser" does not exist in the wallet');
+            console.log('An identity for the user "org2appUser1" does not exist in the wallet');
             console.log('Run the registerUser.js application before retrying');
             return;
         }
 
         // Create a new gateway for connecting to our peer node.
         const gateway = new Gateway();
-        await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
+        await gateway.connect(ccp, { wallet, identity: 'org2appUser1', discovery: { enabled: true, asLocalhost: true } });
 
         // Get the network (channel) our contract is deployed to.
         const network = await gateway.getNetwork('mychannel');
@@ -44,16 +41,8 @@ async function main() {
         // Evaluate the specified transaction.
         // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
         // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
-        const result = await contract.evaluateTransaction('ReadAsset',cnic,"org1msp");
-        console.log("Result of searchOne file : "+typeof result);
-          
-        if (typeof result == undefined){
-           console.log("this");
-         }
-       
-        callback(result.toString());
-
-    //        console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
+        const result = await contract.evaluateTransaction('FindOneClientRecord',"1212121212121",'org2loan');
+        console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);
@@ -62,4 +51,3 @@ async function main() {
 }
 
 main();
-}

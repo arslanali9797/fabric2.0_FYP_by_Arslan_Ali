@@ -42,7 +42,7 @@ body {
 
 <script>
 function validateform(){  
-    var cnic=document.myform.search.value;  
+    var cnic=document.myform.clientLoanCNIC.value;  
     var CNICformat = /^[0-9]{5}[0-9]{7}[0-9]{1}$/;
 
     if(cnic.match(CNICformat))
@@ -90,16 +90,17 @@ function validateform(){
                    </a>
 
 
-                   <%if (found !=''){%>
+                   <%if (searchRecord !=''){%>
                     <div class="container">
-                      <div class="alert alert-danger" role="alert">
-                        <%=found%>
+                      <div class="alert alert-success" role="alert">
+                        <strong> Success!</strong> <%=searchRecord%>
                         </div>
+                      </div>
                 <%}%>
                    
       <div class="container-fluid py-3">
        
-        <form name="myform" method='GET' action="/clientLoanInfoSingle" onsubmit="return validateform()">
+        <form name="myform" method="GET" action="/clientLoanInfoSingle" onsubmit="return validateform()">
         
           <div class="form-group">
             <div class="form-inline ">
@@ -111,7 +112,63 @@ function validateform(){
               </div>
             </div>
           </form>
+</div>
 
+
+
+<div class="container">
+  <div class="jumbotron " style="background-color:#D5DBDB; width:1070px ;">
+    <div class="row">  
+      <label class="control-label col-sm-2 my-3">First Name:</label>
+      <label class="control-label col-sm-2  my-3"> <%= loanIssuedInfo.fname%> </label>
+
+
+      <label class="control-label offset-1 col-sm-2  my-3">Last Name:</label>
+      <label class="control-label col-sm-3  my-3"> <%= loanIssuedInfo.lname%> </label>
+
+  
+    </div>
+      <div class="row">
+      <label class="control-label col-sm-2 my-3">CNIC:</label>
+      <label class="control-label  col-sm-2  my-3"> <%= loanIssuedInfo.CNIC%> </label>
+
+      <label class="control-label offset-1 col-sm-2 my-3">Credit Type:</label>
+        <label class="control-label  col-sm-3  my-3"> <%= loanIssuedInfo.credit_Type%></label>
+    </div>
+      <div class="row">
+        <label class="control-label col-sm-2 my-3">Loan Amount:</label>
+        <label class="control-label  col-sm-2  my-3"> <%= loanIssuedInfo.loan_Amount%> </label>
+
+        <label class="control-label offset-1 col-sm-2 my-3">Loan Issue Date:</label>
+        <label class="control-label  col-sm-3  my-3"> <%= loanIssuedInfo.loan_Issue_Date%> </label>
+    
+      </div>
+        <div class="row">
+        <label class="control-label col-sm-2 my-3">Payment Plan:</label>
+        <label class="control-label  col-sm-2  my-3"> <%= loanIssuedInfo.paymant_Plan%>   </label>
+
+        <label class="control-label offset-1 col-sm-2 my-3">Instalment Per Month:</label>
+        <label class="control-label  col-sm-3  my-3"> <%= loanIssuedInfo.Installment_Per_Month%>  </label>
+        </div>
+
+        <div class="row">
+          <label class="control-label col-sm-2 my-3">Payment Date:</label>
+          <label class="control-label  col-sm-2  my-3"> <%= loanIssuedInfo.paymant_Date%> </label>
+  
+          <label class="control-label offset-1 col-sm-2 my-3">Credit Score:</label>
+          <label class="control-label  col-sm-3  my-3"> <h2><%= loanIssuedInfo.final_Score%>  </h2></label>
+          </div>
+    
+  </div>
+
+
+</div>
+
+
+
+
+</div>
+</div>
 
          
     <script src="vendor/jquery/jquery.min.js"></script>

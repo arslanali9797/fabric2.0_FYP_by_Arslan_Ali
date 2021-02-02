@@ -56,7 +56,6 @@ function validateform(){
     }  
     </script>  
 
-
 <body background-color:#f7f7f7>
  <div class="container-fluid">
                 <div class="jumbotron" style="background-color:#292b2c">
@@ -69,6 +68,11 @@ function validateform(){
                         </div>
                     </div>
                 </div>
+
+
+   
+
+
                 <a href="/home">
                   <button type="submit" class="btn btn-info offset-5 col-1" >Home  </button>
                   </a>
@@ -89,8 +93,14 @@ function validateform(){
                       <button type="sub mit" class="btn btn-info col-1.5" >Loan Information</button>
                  </a>
 
-
-
+             
+                 <div class="bg">
+                  <%if (notFound !=''){%>
+                  <div class="container">
+                    <div class="alert alert-danger" role="alert">
+                      <%=notFound%>
+                      </div>
+                <%}%>
 
                    
       <div class="container-fluid py-3">

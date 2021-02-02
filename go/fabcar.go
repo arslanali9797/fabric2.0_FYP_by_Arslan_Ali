@@ -13,7 +13,7 @@
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
+ * specific language governming permissions and limitations
  * under the License.
  */
 
@@ -25,6 +25,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+	
 
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
   //  "github.com/hyperledger/fabric/core/chaincode/shim/ext/cid"
@@ -101,8 +102,9 @@ type ClientPrivateData struct {
 	InstalmentPerMonth 			float64 			`json:"instalment_per_month"`
 	
 	PaymentDate  				string  		`json:"payment_date"`
-}
 
+	Credit_Score_Is				int				`json:"Credit_Score_Is"`
+}
 
 
 
@@ -111,7 +113,7 @@ type ClientPrivateData struct {
 func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
 	assetInfos := []AssetInfo{
 		AssetInfo{CNIC: "4550503812465" , F_name: "Arslan", L_name: "ALi", Age: 20, Gender: "Male", Marital_status:"single", Value_Of_Assets:1000000, Deposit_Per_Month:1, Withdraw_Per_Month:2, Has_Been_Saving_For_Years:2, Transaction_Per_Month_Average:15, Type_Of_Bussiness:"agriculture",Saving_Amount:2000000,Bank1_Score:434,Bank2_Score:300, Final_Score:500,MspOrg:"org1MSP"},
-		AssetInfo{CNIC: "5440503812223" , F_name: "Azhar",  L_name: "Ali", Age: 30, Gender: "Male", Marital_status:"single", Value_Of_Assets:1000000, Deposit_Per_Month:1, Withdraw_Per_Month:2, Has_Been_Saving_For_Years:2, Transaction_Per_Month_Average:15, Type_Of_Bussiness:"agriculture",Saving_Amount:200000,Bank1_Score:234,Bank2_Score:500, Final_Score:300,MspOrg:"org2MSP"},	
+		AssetInfo{CNIC: "4550503812467" , F_name: "Azhar",  L_name: "Ali", Age: 30, Gender: "Male", Marital_status:"single", Value_Of_Assets:1000000, Deposit_Per_Month:1, Withdraw_Per_Month:2, Has_Been_Saving_For_Years:2, Transaction_Per_Month_Average:15, Type_Of_Bussiness:"agriculture",Saving_Amount:200000,Bank1_Score:234,Bank2_Score:500, Final_Score:300,MspOrg:"org2MSP"},	
 	}
 	for _, assetInfo := range assetInfos {
 		assetJSON, err := json.Marshal(assetInfo)
@@ -438,21 +440,28 @@ func bussinessTypeF(Bname string)(int ){
 }
  
 
+
 func (s *SmartContract) ClientPrivateRecord(ctx contractapi.TransactionContextInterface, CNICloan string,credit_type string,loan_amount float64 ,issue_loandate string,payment_plan float64,payment_date string,orgloan string,msporg string) string {
-	
 
-	clientLoan, err := s.ReadAsset(ctx, CNICloan,msporg)
 
-	if err != nil {
-		return  "no";
+	clientLoan, err4 := s.ReadAssetOrg(ctx, CNICloan, msporg)
+
+	if  clientLoan.CNIC!=CNICloan{
+		return "recordNotFound"
+
 	}
 
 	if  clientLoan.CNIC==CNICloan{
 
+		clientRecordfound , err1 :=s.GetOneClientRecord(ctx,CNICloan,orgloan)
+
 		var instalment_per_month = paymantPlanF(loan_amount,payment_plan)
 
+		if err1 !=nil{
+
+
 		clientInfo := ClientPrivateData{
-		CNIC:				CNICloan+orgloan,				//cinc unique with cnic+orgMSPloan 
+		CNIC:				CNICloan,				//cinc unique with cnic+orgMSPloan 
 		First_Name:			clientLoan.F_name,
 		Last_Name: 			clientLoan.L_name,
 		Credit_Type:		credit_type,			
@@ -460,22 +469,39 @@ func (s *SmartContract) ClientPrivateRecord(ctx contractapi.TransactionContextIn
 		IssueLoanDate:		issue_loandate,
 		PaymentPlan:		payment_plan,
 		InstalmentPerMonth:	instalment_per_month,	
-		PaymentDate:		payment_date,	
+		PaymentDate:		payment_date,
+		Credit_Score_Is:	clientLoan.Final_Score,	
 	}
-	
+
+
 		clientInfoBytes, _ := json.Marshal(clientInfo)
-		 
-		err :=ctx.GetStub().PutState(CNICloan+orgloan, clientInfoBytes)
-		
+		err :=ctx.GetStub().PutState(CNICloan+orgloan, clientInfoBytes)	
 		if(err !=nil){
 		return "yes1"}
+	
+		return "errorIsHere"
+
 	}
 
- 		return "yes"
-
-
-	
+	if clientRecordfound != nil{
+		return "alreadyIssued"
+	}
 }
+
+ if clientLoan == nil{
+return "recordNotFound"
+}
+
+if err4 != nil {
+	return "errorInErr4"
+}
+
+ 		return "yes"}
+
+
+
+
+
 
 func paymantPlanF( amount float64,year float64)(float64){
 
@@ -489,6 +515,23 @@ func paymantPlanF( amount float64,year float64)(float64){
 		return amount/48
 	}
 	return amount/60
+}
+
+func (s *SmartContract) FindOneClientRecord(ctx contractapi.TransactionContextInterface, CNIC string ,orgloan string) (*ClientPrivateData, error) {
+
+	record , err := s.GetOneClientRecord(ctx,CNIC,orgloan)
+
+	if err != nil {
+		return record, nil
+	}
+
+	if record != nil {
+		return record,nil
+	} 
+
+	return record , nil
+	
+
 }
 
 
@@ -633,42 +676,66 @@ func (s *SmartContract) ReadAsset(ctx contractapi.TransactionContextInterface, C
 
   showRecord1 , err1 :=s.ReadAssetOrg(ctx, CNIC, msporg)
 
-  	if err1 != nil{
+  
+
+  if showRecord1 == nil{
 		
 		showRecord2 , err2 :=s.ReadAssetOrg(ctx, CNIC, "org2msp" )
 		
-		if err2 != nil{
-			
-			return nil, fmt.Errorf("Record not found in any Organizations With CNIC No: "+CNIC, err2)
-		}else{
+		
+		if showRecord2 !=nil{
+
 			return showRecord2, nil
 		}
+		if err2 != nil{
+		 
 
+			return showRecord1, nil
+		}
 		}else {	return showRecord1, nil}
 
-	}
+
+		if err1 != nil{
+
+			
+			return nil, nil
+		}
+			
+		return showRecord1, nil
+}
 	
 
 	func (s *SmartContract) ReadAsset2(ctx contractapi.TransactionContextInterface, CNIC string,msporg string) (*AssetInfo, error) {
 
-		showRecord1 , err1 :=s.ReadAssetOrg(ctx, CNIC, msporg)
-	  
-			if err1 != nil{
+		
+		showRecord1 , err1 :=s.ReadAssetOrg(ctx, CNIC, msporg)  
+
+		if showRecord1 == nil{
 			  
 			  showRecord2 , err2 :=s.ReadAssetOrg(ctx, CNIC, "org1msp" )
 			  
-			  if err2 != nil{
-				  
-				  return nil, fmt.Errorf("Record not found in any Organizations With CNIC No: "+CNIC, err2)
-			  }else{
+			  
+			  if showRecord2 !=nil{
+	  
 				  return showRecord2, nil
 			  }
+			  if err2 != nil{
+			   
 	  
+				  return showRecord1, nil
+			  }
 			  }else {	return showRecord1, nil}
 	  
+	  
+			  if err1 != nil{
+	  
+				  
+				  return nil, nil
+			  }
+				  
+			  return showRecord1, nil
+	  
 		  }
-
-
 
 
   func (s *SmartContract) ReadAssetOrg(ctx contractapi.TransactionContextInterface, CNIC string ,msporg string) (*AssetInfo, error) {
@@ -678,6 +745,7 @@ func (s *SmartContract) ReadAsset(ctx contractapi.TransactionContextInterface, C
 	if err != nil {
 	  return nil, fmt.Errorf("failed to read from world state: %v", err)
 	}
+
 	if assetJSON == nil {
 	  return nil, fmt.Errorf("the asset %s does not exist", searchCNIC)
 	}
