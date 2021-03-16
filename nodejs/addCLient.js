@@ -2,7 +2,7 @@
 
 
 //,'4550503812444','car loan','org1MSP','azhar' ,'durani',100000,'2/3/2020',2,50000,'28');
-module.exports.loanClientInfo = function(cnic,loanType,loanAmount,yearPlan,depositeDate,callback){
+module.exports.loanClientInfo = function(cnic,loanType,loanAmount,yearPlan,depositeDate,month,amount,jan1,feb1,mar1,aprl1,may1,june1,jul1,aug1,sep1,oct1,nov1,dec1,callback){
 
 
 
@@ -47,8 +47,8 @@ module.exports.loanClientInfo = function(cnic,loanType,loanAmount,yearPlan,depos
             // Get the contract from the network.
             const contract = network.getContract('fabcar');
 
-
-       const  result = await contract.submitTransaction('ClientPrivateRecord',cnic,loanType,loanAmount,'01/02/2021',yearPlan,depositeDate,'org1loan','org1msp');
+       // console.log("Value of month "+month)
+       const  result = await contract.submitTransaction('ClientPrivateRecord',cnic,loanType,loanAmount,'18/02/2021',yearPlan,depositeDate,month,amount,jan1,feb1,mar1,aprl1,may1,june1,jul1,aug1,sep1,oct1,nov1,dec1,'org1loan','org1msp');
        console.log(result.toString());
         
        callback(result.toString());

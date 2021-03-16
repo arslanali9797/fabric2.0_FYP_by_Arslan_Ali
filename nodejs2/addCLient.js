@@ -1,4 +1,4 @@
-module.exports.loanClientInfo = function(cnic,loanType,loanAmount,yearPlan,depositeDate,callback){
+module.exports.loanClientInfo = function(cnic,loanType,loanAmount,yearPlan,depositeDate,month,amount,jan1,feb1,mar1,aprl1,may1,june1,jul1,aug1,sep1,oct1,nov1,dec1,callback){
 
     console.log(cnic);
         /*
@@ -41,7 +41,7 @@ module.exports.loanClientInfo = function(cnic,loanType,loanAmount,yearPlan,depos
             // Get the contract from the network.
             const contract = network.getContract('fabcar');
     
-        const  result = await contract.submitTransaction('ClientPrivateRecord',cnic,loanType,loanAmount,'01/02/2021',yearPlan,depositeDate,'org2loan','org2msp');
+        const  result = await contract.submitTransaction('ClientPrivateRecord',cnic,loanType,loanAmount,'18/02/2021',yearPlan,depositeDate,month,amount,jan1,feb1,mar1,aprl1,may1,june1,jul1,aug1,sep1,oct1,nov1,dec1,'org2loan','org2msp');
        console.log(result.toString());
        callback(result.toString());
        // Disconnect from the gateway.

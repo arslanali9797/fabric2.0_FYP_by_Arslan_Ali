@@ -53,7 +53,7 @@ body {
                    <div class="jumbotron" style="background-color:#292b2c">
                        <div class="form-inline">
                            <div class="col-3 text-light">
-                               <h1>Bank_1</h1>
+                               <h1>Bank_2</h1>
                            </div>
                            <div class="text-center text-info">
                                <h1>Decentralized Credit Score System (DCSS)</h1>
@@ -140,6 +140,95 @@ body {
 
 
         </div>
+
+
+
+
+        <form name="myForm" action="/InstalmantInfo" onsubmit="return validateForm()" method="post" required>
+          <div class="row">
+            <label class="mx-3 col-1.2">Payment No:</label>  
+          
+                    <input type="text" class="col-2 form-control" name="paymantNo" id="" placeholder="Paymant No"/>
+                   
+                    <label class="mx-3 col-1.2">Date:</label>  
+                    <input type="text" class="col-2 form-control" name="paymantMonth" id="" placeholder="Date"/>
+                   
+                   
+                    <label class="mx-3 col-1.2">Amount:</label>  
+                    <input type="text" class="col-2 form-control" name="PayingAmount" id="" placeholder="Amount"/>
+                    <button type="submit" class="btn btn-info  col-2" >Add Installment  </button>
+          
+                  </div>
+          
+                  </form>
+
+
+
+
+        <% let date = loanIssuedInfo.loan_Issue_Date %>
+        <% let dateSplit = date.split("/") %>
+        <% let day = dateSplit[0] %>
+        
+
+        <% let month = dateSplit[1] %>
+      
+        <% let year = dateSplit[2] %>
+        
+
+
+
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Payment No</th>
+              <th scope="col">Payment Date</th>
+              <th scope="col">Instalmant/Date</th>
+              <th scope="col">Paid Amount</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+
+
+
+          <% var newMonth = parseInt(month) %>
+          <% var newMonthIs = newMonth %>
+          <% var newYear = year %>
+
+          <% let status = "paid" %>
+
+          <%  for(var i = 1;i<=loanIssuedInfo.paymant_Plan*12 ;i++) {%>
+            <% if (newMonthIs == 12 ){ %>
+            <% newMonthIs = 0
+              newYear++ 
+          }  %>
+            <% newMonthIs++ %>
+
+
+            <tbody>
+            <tr>
+              <th scope="row"><%= i %></th>
+              <td><%=loanIssuedInfo.paymant_Date%>/<%=newMonthIs%>/<%=newYear%></td>
+             
+              <td><%= loanIssuedInfo.Installment_Per_Month %> </td>
+              <td><%= monthObjectKeys[i-1]%></td>
+
+             <% if(monthObjectKeys[i-1]>0){%>
+              <% status = "paid"}
+              else {status = "Unpaid"}%>
+              
+              
+
+              <td><%= status%></td>
+            </tr>
+
+           
+
+          </tbody>
+          <%}%>
+        </table>
+
+        
+
 
            <!-- JS -->
     <script src="vendor/jquery/jquery.min.js"></script>

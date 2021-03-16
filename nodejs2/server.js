@@ -38,60 +38,72 @@ app.get('/',(req,res)=>{
     
     });
   
+
+
+
+
+
+
   app.post('/loanInfo',(req,res)=>{
   
-  console.log("THIS IS DATA loan Info = "+JSON.stringify(req.body));
-  console.log("this is it");
-  console.log("query Result 1:")
-  
-  callback = function(queryResult0){
-  
+    console.log(req.body.cnic);
+    console.log(req.body.loanamount);
+    console.log(req.body.paymentplan)
+    console.log(req.body.instalmentdate)
+
+    console.log(req.body.loan)
+
+    console.log("#######")
+
+callback = function(queryResult0){
+
+     
+ if (queryResult0=="errorIsHere"){
+
+
+  callback = function(queryResult1){
+    var obj = JSON.parse(queryResult1);
+     console.log(obj.CNIC);
+     console.log(obj.first_name);
+     console.log(obj.last_name);
+     console.log(obj.credit_type);
+     console.log(obj.loan_amount);
+     console.log(obj.issue_loandate);
+     console.log(obj.payment_plan);
+     console.log(obj.instalment_per_month);
+     console.log(obj.payment_date);
+     console.log(obj.Credit_Score_Is);
+
+     var loanIssuedInfo = {
+      "CNIC":             obj.CNIC,
+      "fname":            obj.first_name,
+      "lname":            obj.last_name,
+      "credit_Type":      obj.credit_type,
+      "loan_Amount":      obj.loan_amount,
+      "loan_Issue_Date":  obj.issue_loandate,
+      "paymant_Plan":     obj.payment_plan,
+      "Installment_Per_Month": obj.instalment_per_month,
+      "paymant_Date":     obj.payment_date,
+      "final_Score":      obj.Credit_Score_Is,}
+
+      res.render('showClientRecord',{loanIssuedInfo,RecordAdded:"Recored is Added , Loan is issued to Client with this CNIC : "+ req.body.cnic});}
+  clientInfoByOne.searchOneClient(req.body.cnic,callback);
+     }
+console.log("query Result is1 "+queryResult0);
     if(queryResult0==""){
       console.log("EMPTY QYERY Reuslt:")
       res.render('addClientLoan',{errorIsHere:" No prior Record Found with This CNIC : "+ req.body.cnic});}
-      else {
 
-    callback = function(queryResult) {
-    console.log("loan result "+queryResult)
-    console.log("query Result 2:"+ typeof queryResult)
-     if (queryResult == 'alreadyIssued'){
-        //res.render(loanIfno,{reject:"Loan Is already Issued"})
-        res.render('addClientLoan',{errorIsHere:" Loan is Already is Isssued To Given CNIC : "+ req.body.cnic});}
-    if (queryResult == "errorIsHere"){
-        callback = function(queryResult1){
-         var obj = JSON.parse(queryResult1);
-          console.log(obj.CNIC);
-          console.log(obj.first_name);
-          console.log(obj.last_name);
-          console.log(obj.credit_type);
-          console.log(obj.loan_amount);
-          console.log(obj.issue_loandate);
-          console.log(obj.payment_plan);
-          console.log(obj.instalment_per_month);
-          console.log(obj.payment_date);
-          console.log(obj.Credit_Score_Is);
-          
-          var loanIssuedInfo = {
-            "CNIC":             obj.CNIC,
-            "fname":            obj.first_name,
-            "lname":            obj.last_name,
-            "credit_Type":      obj.credit_type,
-            "loan_Amount":      obj.loan_amount,
-            "loan_Issue_Date":  obj.issue_loandate,
-            "paymant_Plan":     obj.payment_plan,
-            "Installment_Per_Month": obj.instalment_per_month,
-            "paymant_Date":     obj.payment_date,
-            "final_Score":      obj.Credit_Score_Is,}
-          res.render('showClientRecord',{loanIssuedInfo,RecordAdded:"Recored is Added , Loan is issued to Client with this CNIC : "+ req.body.cnic});}
-        clientInfoByOne.searchOneClient(req.body.cnic,callback);}     }
-  clientInfo.loanClientInfo(req.body.cnic, req.body.loan, parseInt(req.body.loanamount), parseInt(req.body.paymentplan),req.body.instalmentdate,callback);
-  }
-  }
-  
-  searchOneEntry.queryOne(callback,req.body.cnic);
-  
-  
-  });
+
+    }   
+clientInfo.loanClientInfo(req.body.cnic,req.body.loan,parseInt(req.body.loanamount), parseInt(req.body.paymentplan),req.body.instalmentdate,0,0,0,0,0,0,0,0,0,0,0,0,0,0,callback); 
+});
+
+
+
+
+
+
 
 
 
@@ -102,39 +114,214 @@ app.get('/',(req,res)=>{
 
 
 
+  let CNICIs= ""
+  let  fname =""
+  let lastName = ""
+  let credit_Type_Is = ""
+  let loanAmount = ""
+  let loanIssueDate = ""
+  let paymantPlanIs = ""
+  let instalmantPerMonth = ""
+  let patmantDateIs = ""
+  let creditScoreIs = ""
+  let Jan1 = 0
+  let feb1 = 0
+  let mar1 = 0
+  let aprl1 = 0 
+  let may1 = 0 
+  let jun1 = 0
+  
+  let july1 = 0
+  let aug1 = 0
+  let sep1 = 0
+  let oct1 = 0 
+  let nov1 = 0 
+  let dec1 = 0   
+
+
   app.get('/foundCLientLoanRecord',(req,res)=>{
     console.log("Searching CNIC");
     console.log("Searching CNIC : "+ req.query.ClientSearchCnic +"  AND Type is : "+typeof (req.query.ClientSearchCnic));
+
+    callback = function(queryResult1){
+      console.log("yes")
+
+
+      var obj = JSON.parse(queryResult1);
+ 
+      console.log(obj);
+      
+      CNICIs = obj.CNIC
+      fname = obj.first_name
+      lastName = obj.last_name
+      credit_Type_Is = obj.credit_type
+      loanAmount   = obj.loan_amount
+      loanIssueDate = obj.issue_loandate
+      paymantPlanIs = obj.payment_plan
+      instalmantPerMonth = obj.instalment_per_month
+      patmantDateIs = obj.payment_date
+      creditScoreIs = obj.Credit_Score_Is
+      
+      
+      
+      
+      
+      
+      var months = obj.YearStructure;
+
+      console.log("month")
+      console.log(months);
+      
+      let monthObjectKeys= Object.values(months)
+      console.log(monthObjectKeys[0])
+      console.log(monthObjectKeys[1])
+      
+      jan1 = monthObjectKeys[0]
+      feb1 = monthObjectKeys[1]
+      mar1 = monthObjectKeys[2]
+      aprl1 = monthObjectKeys[3]
+      may1 = monthObjectKeys[4] 
+      jun1 = monthObjectKeys[5]
+      july1 = monthObjectKeys[6]
+       aug1 = monthObjectKeys[7]
+      sep1 = monthObjectKeys[8]
+      oct1 = monthObjectKeys[9] 
+       nov1 = monthObjectKeys[10] 
+       dec1 = monthObjectKeys[11] 
+      console.log("THIS IS JAN ON "+jan1 )
+
+
+
+      
+
   
-    callback = function(queryResult){
+      let objLength = Object.keys(obj.YearStructure).length
+      console.log("object length is "+ objLength)
+        
+         
+         var loanIssuedInfo = {
+           "CNIC":             obj.CNIC,
+           "fname":            obj.first_name,
+           "lname":            obj.last_name,
+           "credit_Type":      obj.credit_type,
+           "loan_Amount":      obj.loan_amount,
+           "loan_Issue_Date":  obj.issue_loandate,
+           "paymant_Plan":     obj.payment_plan,
+           "Installment_Per_Month": obj.instalment_per_month,
+           "paymant_Date":     obj.payment_date,
+           "final_Score":      obj.Credit_Score_Is,
+         }
+        
 
-      if(queryResult==""){
-        console.log("EMPTY QYERY Reuslt:");
-       res.render('foundOneCLientRecord',{errorIsHere:" No prior Record Found with This CNIC : "+ req.query.ClientSearchCnic});
 
-      }else{
 
-      console.log("inside callback function : "+queryResult)
-      console.log("inside callback function : "+ typeof queryResult)
 
-      var obj = JSON.parse(queryResult);
-      console.log(obj.CNIC);
-      console.log(obj.first_name);
-      console.log(obj.last_name);
-      console.log(obj.credit_type);
-      console.log(obj.loan_amount);
-      console.log(obj.issue_loandate);
-      console.log(obj.payment_plan);
-      console.log(obj.instalment_per_month);
-      console.log(obj.payment_date);
-      console.log(obj.Credit_Score_Is);
-     
-      }
+console.log("length of loanIssuedInfo is : "+Object.keys(loanIssuedInfo).length)
+res.render('foundCLientLoanRecord',{loanIssuedInfo,monthObjectKeys,objLength,foundRecord:"Recored Found"});
 
-             }
+    }
+    clientInfoByOne.searchOneClient(req.query.ClientSearchCnic,callback); 
+
+
+
   
-     clientInfoByOne.searchOneClient(req.query.ClientSearchCnic,callback);
   });  
+
+
+
+
+
+
+  app.post('/InstalmantInfo',(req,res)=>{
+  
+    let paymantNo1 = req.body.paymantNo
+    let paymantMonthIs = req.body.paymantMonth
+    let payingAmountIs =  req.body.PayingAmount
+  
+    console.log("Payment no is"+paymantNo1)
+    console.log("Paymanet date is "+paymantMonthIs)
+    console.log("patmanet amount"+payingAmountIs)
+
+
+ 
+    console.log("first month value is "+Jan1)
+    callback = function(queryResult0){
+  
+      callback = function(queryResult1){
+        var obj = JSON.parse(queryResult1);
+   
+        console.log(obj);
+    
+        CNICIs = obj.CNIC
+        fname = obj.first_name
+        lastName = obj.last_name
+        credit_Type_Is = obj.credit_type
+        loanAmount   = obj.loan_amount
+        loanIssueDate = obj.issue_loandate
+        paymantPlanIs = obj.payment_plan
+        instalmantPerMonth = obj.instalment_per_month
+        patmantDateIs = obj.payment_date
+        creditScoreIs = obj.Credit_Score_Is
+    
+        
+          //  console.log(Obj.YearStructure)
+         
+       var months = obj.YearStructure;
+    
+    console.log("month")
+    console.log(months);
+    
+    let monthObjectKeys= Object.values(months)
+    console.log("This is month on "+monthObjectKeys[0])
+    console.log(monthObjectKeys[1])
+    
+  
+    jan1 = monthObjectKeys[0]
+    feb1 = monthObjectKeys[1]
+    mar1 = monthObjectKeys[2]
+    aprl1 = monthObjectKeys[3]
+    may1 = monthObjectKeys[4] 
+    jun1 = monthObjectKeys[5]
+    july1 = monthObjectKeys[6]
+   aug1 = monthObjectKeys[7]
+  sep1 = monthObjectKeys[8]
+  oct1 = monthObjectKeys[9] 
+   nov1 = monthObjectKeys[10] 
+   dec1 = monthObjectKeys[11] 
+  
+  
+    console.log("THIS IS JAN ON "+jan1 )
+       
+     let objLength = Object.keys(obj.YearStructure).length
+      console.log("object length is "+ objLength)
+        
+         
+         var loanIssuedInfo = {
+           "CNIC":             obj.CNIC,
+           "fname":            obj.first_name,
+           "lname":            obj.last_name,
+           "credit_Type":      obj.credit_type,
+           "loan_Amount":      obj.loan_amount,
+           "loan_Issue_Date":  obj.issue_loandate,
+           "paymant_Plan":     obj.payment_plan,
+           "Installment_Per_Month": obj.instalment_per_month,
+           "paymant_Date":     obj.payment_date,
+           "final_Score":      obj.Credit_Score_Is,
+         }
+    
+         console.log("length of loanIssuedInfo is : "+Object.keys(loanIssuedInfo).length)
+         res.render('foundCLientLoanRecord',{loanIssuedInfo,monthObjectKeys,objLength,foundRecord:"Recored Found"});
+    
+        
+    }
+      clientInfoByOne.searchOneClient(CNICIs,callback); 
+  
+    
+    }
+    clientInfo.loanClientInfo(CNICIs, credit_Type_Is, parseInt(loanAmount), parseInt(paymantPlanIs),patmantDateIs,parseInt(paymantNo1),parseInt(payingAmountIs),parseInt(jan1),parseInt(feb1),parseInt(mar1),parseInt(aprl1),parseInt(may1),parseInt(jun1),parseInt(july1),parseInt(aug1),parseInt(sep1),parseInt(oct1),parseInt(nov1),parseInt(dec1),callback);
+  
+
+  });
 
 
 app.post('/Login_Verified',(req,res)=>{
@@ -185,7 +372,7 @@ var clientINfo ={
   "valueOfAssets":req.body.assetsValue,
   "depositPerMonth":req.body.deposit,  
   "withdrawPerMonth" :req.body.withdrawPerMonth,
-  "savingYears": req.body.savingAmount,
+  "savingYears": req.body.savingForYear,
   "transactionPerMonth": req.body.transactionPerMonth,
   "typeOfBussiness":req.body.JobType,
   "savingAmount": req.body.savingAmount,}
@@ -224,15 +411,46 @@ var clientINfo ={
 
 
 
-} 
-if (queryResult == 'no1'){
+
+  }
+
+
+
+if (queryResult == 'yes1'){
    
+  console.log("Record is Updated");
+   }
+   
+
+if (queryResult == 'no2'){
+
+
+  callback = function(queryResult) { 
+    var obj = JSON.parse(queryResult);
+   
+    clientINfo.finalScoreIs =obj.finale_score
+
+    console.log("###############Final Score is ##########"+clientINfo.finalScoreIs);
+    res.render('showResult',{clientINfo,success:'Record is successfuly added'});
+
+  }
+  
+  searchOneEntry.queryOne(callback,clientINfo.CNIC);
+
+}
+
+  
+
+ 
+if (queryResult == 'no4'){
+   
+  console.log("Cnic is not matched");
+   }
+    
+ if (queryResult == 'no1'){
   res.render('Form',{result:"'The Record with this CNIC : "+clientINfo.CNIC +" is already exist in the Organization"});
   }
 
-  if (queryResult == 'n2'){
-    res.send("NO2 ok");
-  }
 
  if (queryResult == 'no3'){
       callback = function(queryResult) { 
